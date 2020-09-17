@@ -5772,6 +5772,29 @@ label {
   color: #777777;
   opacity: 1;
   font-weight: 300; }
+  .sneaker-size {
+    border: 1px solid;
+    background: #ffc107;
+    margin-bottom: 10px;
+    padding-left: 11px;
+    color: white;
+    font-weight: 500;
+    border-radius: 6.5px;
+}
+
+.row.size-tab {
+    padding-bottom: 27px;
+}
+
+.col-sm-6.size-t {
+    text-align: left;
+    width: 40px;
+}
+
+.sneaker-size:hover {
+    background: linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+    cursor: pointer;
+}
 .single-footer-widget :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
   color: #777777;
@@ -5780,6 +5803,14 @@ label {
   /* Microsoft Edge */
   color: #777777;
   font-weight: 300; }
+  
+ .pagination a{
+ 	width: 70px;
+	line-height: 16px;
+ }
+ .change-size{
+ 	background: #ff6c00;
+ }
 
 .footer-text {
   padding-top: 80px; }
@@ -5789,5 +5820,6 @@ label {
   .footer-text a,
   .footer-text i {
     color: #ffba00; }
+    
 
 /*# sourceMappingURL=main.css.map */

@@ -8,12 +8,10 @@
        <pattern>/admin*</pattern>
     </decorator>
     
-    <decorator name="login" page="login.jsp">
-        <pattern>/login</pattern>
+ 
+     <decorator name="karma" page="web.jsp">
+       <pattern>/*</pattern>
     </decorator>
     
-     <decorator name="karma" page="web.jsp">
-       <pattern>/karma*</pattern>
-    </decorator>
     
 </decorators>

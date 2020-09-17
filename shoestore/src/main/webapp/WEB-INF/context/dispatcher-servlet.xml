@@ -27,7 +27,7 @@
          http://www.springframework.org/schema/tx/spring-tx.xsd">
 	
 	<context:component-scan
-		base-package="shoestore.controller" />
+		base-package="shoestore.controller,shoestore.api" />
 
 	<mvc:annotation-driven />
 

@@ -19,8 +19,9 @@ public class ProductAttributeEntity extends BaseEntity{
 	@Column(name="color")
 	private String color;
 	
-	@Column(name="image")
-	private String image;
+	@Column(name="quantity")
+	private Integer quantity;
+	
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="product_id")
@@ -50,13 +51,6 @@ public class ProductAttributeEntity extends BaseEntity{
 		this.color = color;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
 
 	public ProductEntity getProductEntity() {
 		return productEntity;
@@ -64,6 +58,14 @@ public class ProductAttributeEntity extends BaseEntity{
 
 	public void setProductEntity(ProductEntity productEntity) {
 		this.productEntity = productEntity;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	

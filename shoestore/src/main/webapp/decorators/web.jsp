@@ -1,4 +1,5 @@
-
+<%@page import="org.apache.commons.lang.StringUtils"%>
+<%@page import="shoestore.util.SecurityUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,6 +18,7 @@
 	<meta name="keywords" content="">
 	<!-- meta character set -->
 	<meta charset="UTF-8">
+	
 	<!-- Site Title -->
     <title>Karma Shop</title>
 	
@@ -25,11 +27,13 @@
 	<link rel="stylesheet" href='<c:url value='/template/web/css/themify-icons.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/bootstrap.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/owl.carousel.css'/>'>
-	<link rel="stylesheet" href='<c:url value='/template/web/css/nice-select.cs'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/nouislider.min.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/ion.rangeSlider.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/ion.rangeSlider.skinFlat.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/magnific-popup.css'/>'>
+	<link rel="stylesheet" href='<c:url value='/template/web/scss/main.scss'/>'>
+	<link rel="stylesheet" href='<c:url value='/template/web/css/nice-select.css'/>'>
+	<link rel="stylesheet" href='<c:url value='/template/web/scss/theme/_common1.scss'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/main.css'/>'>
 </head>
 <body class="animsition">
@@ -57,29 +61,14 @@
 	<!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script> -->
 
 	<!--===============================================================================================-->
-	<script src="<c:url value='/template/web/js/jquery-1.11.2.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/jquery.bxslider.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/fancybox/fancybox.js' />"></script>
-	<script src="<c:url value='/template/web/js/fancybox/helpers/jquery.fancybox-thumbs.js' />"></script>
-	<script src="<c:url value='/template/web/js/jquery.flexslider-min.js' />"></script>
-	<script src="<c:url value='/template/web/js/swiper.jquery.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/jquery.waypoints.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/progressbar.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/ion.rangeSlider.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/chosen.jquery.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/jQuery.Brazzers-Carousel.js' />"></script>
-	<script src="<c:url value='/template/web/s/plugins.js' />"></script>
-	<script src="<c:url value='/template/web/js/main.js' />"></script>
-	<script src="<c:url value='/template/web/js/gmap.js' />"></script>
-	<script src="<c:url value='https://maps.googleapis.com/maps/api/js?key=AIzaSyDhAYvx0GmLyN5hlf6Uv_e9pPvUT3YpozE' />"></script>
-	<script src="<c:url value='/template/web/js/list-sneaker.js' />"></script>
-	<script src="<c:url value='/template/web/js/header.js' />"></script>
+	
 	
 	
 	<script src="<c:url value='/template/web/js/vendor/jquery-2.2.4.min.js' />"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
 	 crossorigin="anonymous"></script>
 	<script src="<c:url value='/template/web/js/vendor/bootstrap.min.js' />"></script>
+	<script src="<c:url value='/template/web/js/jquery.twbsPagination.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.ajaxchimp.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.nice-select.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.sticky.js' />"></script>
@@ -87,11 +76,46 @@
 	<script src="<c:url value='/template/web/js/countdown.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.magnific-popup.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/owl.carousel.min.js' />"></script>
-	
 	<!--gmaps Js-->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 	<script src="<c:url value='/template/web/js/gmaps.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/main.js' />"></script>
+	
+	<script >
+	var totalPages = ${totalPage};
+	var currentPage = ${page};
+    $(function () {
+    	
+        window.pagObj = $('#pagination').twbsPagination({
+        	totalPages: totalPages,
+            visiblePages: 3,
+            startPage: currentPage,
+            onPageClick: function (event, page) {
+            	if (currentPage != page) {
+            		window.location.href="/karma/listproduct?page="+page+"&limit=9";
+				}
+            }
+        });
+    });
+</script>
+<script >
+	var totalPages = ${totalPage};
+	var currentPage = ${page};
+    $(function () {
+    	
+        window.pagObj = $('#pagination1').twbsPagination({
+        	totalPages: totalPages,
+            visiblePages: 3,
+            startPage: currentPage,
+            onPageClick: function (event, page) {
+            	if (currentPage != page) {
+            		window.location.href="/karma/listproduct?page="+page+"&limit=9";
+				}
+            }
+        });
+    });
+</script>
+	
 	
 </body>
 </html>

@@ -17,7 +17,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"sneakerstore.repository"})
+@EnableJpaRepositories(basePackages = {"shoestore.repository"})
 @EnableTransactionManagement
 public class JPAConfig {
 
@@ -48,7 +48,7 @@ public class JPAConfig {
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/sneakerstore");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/sneakerstore?useSSL=false");
 		dataSource.setUsername("root");
 		dataSource.setPassword("thanhtuan123");
 		return dataSource;
