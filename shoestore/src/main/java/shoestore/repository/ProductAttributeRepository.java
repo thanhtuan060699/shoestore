@@ -10,4 +10,5 @@ import shoestore.entity.ProductEntity;
 public interface ProductAttributeRepository extends JpaRepository<ProductAttributeEntity, Long>{
 	public List<ProductAttributeEntity> findAllByProductEntity(ProductEntity productEntity);
 	public ProductAttributeEntity findByColorAndSizeAndProductEntity(String color,Double size,ProductEntity productEntity);
+	public ProductAttributeEntity findByProductEntity(ProductEntity productEntity);
 }

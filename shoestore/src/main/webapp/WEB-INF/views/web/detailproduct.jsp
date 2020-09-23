@@ -44,7 +44,7 @@
 				</div>
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
-						<h3>${product.name }</h3>
+						<h3 class="name-detail-product" data-name="${product.name}">${product.name }</h3>
 						<h2 class="price-detail-product">VND</h2>
 						<ul class="list">
 							<li><a class="active" href="#"><span>Category</span> : Household</a></li>
@@ -57,20 +57,19 @@
 						<c:forEach  var="item" items="${sizes}">
 						
 							<div class="col-sm-6 size-t">
-								<div class="sneaker-size" data-size="${item.size}" data-color="${item.color}">Size ${item.size } VN Color :${item.color }</div>
+								<div class="sneaker-size" data-size="${item.size}" data-color="${item.color}" data-atr="${item.id}">Size ${item.size } VN Color :${item.color }</div>
 							</div>
 						</c:forEach>
 						</div>
 						<div class="product_count">
 							<label for="qty">Quantity:</label>
-							<input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-							 class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-							 class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+							<input type="number"  value="1" title="Quantity:" class="input-text qty qtyChange" onchange="changeQuantity();">
+							<button  class="increase items-count" ><i class="lnr lnr-chevron-up"></i></button>
+							<button  class="reduced items-count"  ><i class="lnr lnr-chevron-down"></i></button>
+							
 						</div>
 						<div class="card_area d-flex align-items-center">
-							<a class="primary-btn" href="#">Add to Cart</a>
+							<a class="primary-btn add-cart" >Add to Cart</a>
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
 						</div>
@@ -542,6 +541,6 @@
 		</div>
 	</section>
 	<!-- End related-product Area -->
-	<script src="<c:url value='/template/web/js/jsmain/cart.js' />"></script>
+	<script src="<c:url value='/template/web/js/jsmain/productdetail.js' />"></script>
 </body>
 </html>

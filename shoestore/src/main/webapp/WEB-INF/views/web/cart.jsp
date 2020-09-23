@@ -1,5 +1,7 @@
+<%@include file="/common/taglib.jsp"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,76 +27,68 @@
 
     <!--================Cart Area =================-->
     <section class="cart_area">
+    
+   	
         <div class="container">
+        <div class="alert-quantity">
+        </div>
             <div class="cart_inner">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Product</th>
-                                <th scope="col">Price</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Size</th>
                                 <th scope="col">Quantity</th>
+                                <th scope="col">Price</th>
                                 <th scope="col">Total</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
-                        <tbody>
-                           
+                        <tbody class="add-delete">
+                           <c:forEach var="item" items="${cart}">
                             <tr>
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-                                            <img src="img/cart.jpg" alt="">
+                                            <img src="/template/web/img/cart.jpg" alt="">
                                         </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
+                                        <div class="media-body cart-name" data-name="${item.name }" data-id="${item.id }">
+                                            <p>${item.name }</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td>
-                                    <h5>$360.00</h5>
+                                <td class="cart-color" data-color="${item.color }">
+                                    <h5>${item.color }</h5>
+                                </td>
+                                <td  class="cart-size" data-color="${item.size }">
+                                    <h5>${item.size }</h5>
                                 </td>
                                 <td>
-                                    <div class="product_count">
-                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                            class="input-text qty">
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                            class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                            class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                                    <div class="product_count cart-quantity" data-quantity="${item.quantity}" data-maxquantity="${item.maxQuantity}">
+                                    	<div class="quantity-change-cart" onchange="changeQuantityCart(${item.id})">
+                                    		<input type="text" name="qty" id="sst" maxlength="12" value="${item.quantity }" title="Quantity:"
+                                            class="input-text qty qtyChange" >
+                                    	</div>
+                                        
+                                        <button  class="increase items-count" onclick="increaseCart(${item.id})"><i class="lnr lnr-chevron-up"></i></button>
+										<button  class="reduced items-count"   onclick="reduceCart(${item.id})"><i class="lnr lnr-chevron-down"></i></button>
                                     </div>
                                 </td>
+                                <td class="cart-price" data-price="${item.price}">
+                                    <h5>${item.price} VND</h5>
+                                </td>
+                                <td class="cart-total" data-total="${item.total}">
+                                    <h5>${item.total} VND</h5>
+                                </td>
                                 <td>
-                                    <h5>$720.00</h5>
+                                	 <h5 style="font-size: 20px;cursor: pointer;"><i class="fa fa-trash-o" aria-hidden="true" onclick="deleteCart(${item.id})"></i></h5>
+                                	 
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/cart.jpg" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$360.00</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                            class="input-text qty">
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                            class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                            class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$720.00</h5>
-                                </td>
-                            </tr>
+                            
+                            </c:forEach>
                             <tr class="bottom_button">
                                 <td>
                                     <a class="gray_btn" href="#">Update Cart</a>
@@ -124,7 +118,7 @@
                                     <h5>Subtotal</h5>
                                 </td>
                                 <td>
-                                    <h5>$2160.00</h5>
+                                    <h5 class="sub-total">${subTotal } VND</h5>
                                 </td>
                             </tr>
                             <tr class="shipping_area">
@@ -174,16 +168,19 @@
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
                                         <a class="gray_btn" href="#">Continue Shopping</a>
-                                        <a class="primary-btn" href="#">Proceed to checkout</a>
+                                        <a class="primary-btn" href="/karma/checkout">Proceed to checkout</a>
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <div class="zero-product"></div>
                 </div>
             </div>
         </div>
     </section>
     <!--================End Cart Area =================-->
+    <script src="<c:url value='/template/web/js/vendor/jquery-2.2.4.min.js' />"></script>
+    <script src="<c:url value='/template/web/js/jsmain/cart.js' />"></script>
 </body>
 </html>

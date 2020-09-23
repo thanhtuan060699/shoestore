@@ -55,7 +55,13 @@
 						<ul class="nav navbar-nav navbar-right">
 							<li class="nav-item">
 								<a href="/karma/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-								<span>(0)</span></a>
+								<c:if test="${not empty amounts }">
+									<span class="numberCart">(${amounts })</span></a>
+								</c:if>
+								<c:if test="${empty amounts }">
+									<span class="numberCart">(0)</span></a>
+								</c:if>
+								
 								
 							</li>
 							<li class="nav-item">

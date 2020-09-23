@@ -11,13 +11,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import shoestore.dto.ProductAttributeDTO;
 import shoestore.dto.ProductDTO;
+import shoestore.service.impl.ProductAttributeService;
 import shoestore.service.impl.ProductService;
 
 @Controller
 public class ProductController {
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	ProductAttributeService productAttributeService;
 	
 	@RequestMapping(value = "/karma/listproduct",method = RequestMethod.GET)
 	public ModelAndView listProduct(@RequestParam("page") int page, 
@@ -29,6 +34,16 @@ public class ProductController {
 		modelAndView.addObject("page", page);
 		Pageable pageable=new PageRequest(page-1, limit);
 		List<ProductDTO> productDTOs=productService.findAll(pageable);
+		List<ProductAttributeDTO> productAttributeDTOs=productAttributeService.findSampleOfProduct(productDTOs);
+		int i=0;
+		for(ProductDTO productDTO:productDTOs) {
+			productDTO.setPrice(productAttributeDTOs.get(i).getPrice());
+			productDTO.setSize(productAttributeDTOs.get(i).getSize());
+			productDTO.setColor(productAttributeDTOs.get(i).getColor());
+			productDTO.setQuantity(productAttributeDTOs.get(i).getQuantity());
+			productDTO.setProductAttributeId(productAttributeDTOs.get(i).getId());
+			i++;
+		}
 		modelAndView.addObject("listProducts", productDTOs);
 		return modelAndView;
 	}

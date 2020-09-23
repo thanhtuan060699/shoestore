@@ -73,7 +73,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			return true;
 		}
 		return false;
-	}private boolean isCustomer(List<String> roles) {
+	}
+	private boolean isCustomer(List<String> roles) {
 		if (roles.contains("CUSTOMER")) {
 			return true;
 		}

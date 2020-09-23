@@ -26,6 +26,7 @@
 	<link rel="stylesheet" href='<c:url value='/template/web/css/font-awesome.min.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/themify-icons.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/bootstrap.css'/>'>
+	<link rel="stylesheet" href='<c:url value='/template/web/css/main.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/owl.carousel.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/nouislider.min.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/ion.rangeSlider.css'/>'>
@@ -34,7 +35,10 @@
 	<link rel="stylesheet" href='<c:url value='/template/web/scss/main.scss'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/css/nice-select.css'/>'>
 	<link rel="stylesheet" href='<c:url value='/template/web/scss/theme/_common1.scss'/>'>
-	<link rel="stylesheet" href='<c:url value='/template/web/css/main.css'/>'>
+	<link rel="stylesheet" href='<c:url value='/template/web/scss/theme/_product.scss'/>'>
+	<link rel="stylesheet" href='<c:url value='/template/web/scss/theme/_predefine.scss'/>'>
+	<link rel="stylesheet" href='<c:url value='/template/web/scss/theme/_reset.scss'/>'>
+	<link rel="stylesheet" href='<c:url value='/template/web/css/custom.css'/>'>
 </head>
 <body class="animsition">
 	<!-- Header-->
@@ -73,7 +77,7 @@
 	<script src="<c:url value='/template/web/js/jquery.nice-select.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.sticky.js' />"></script>
 	<script src="<c:url value='/template/web/js/nouislider.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/countdown.js' />"></script>
+	
 	<script src="<c:url value='/template/web/js/jquery.magnific-popup.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/owl.carousel.min.js' />"></script>
 	<!--gmaps Js-->
@@ -81,40 +85,7 @@
 	<script src="<c:url value='/template/web/js/gmaps.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/main.js' />"></script>
 	
-	<script >
-	var totalPages = ${totalPage};
-	var currentPage = ${page};
-    $(function () {
-    	
-        window.pagObj = $('#pagination').twbsPagination({
-        	totalPages: totalPages,
-            visiblePages: 3,
-            startPage: currentPage,
-            onPageClick: function (event, page) {
-            	if (currentPage != page) {
-            		window.location.href="/karma/listproduct?page="+page+"&limit=9";
-				}
-            }
-        });
-    });
-</script>
-<script >
-	var totalPages = ${totalPage};
-	var currentPage = ${page};
-    $(function () {
-    	
-        window.pagObj = $('#pagination1').twbsPagination({
-        	totalPages: totalPages,
-            visiblePages: 3,
-            startPage: currentPage,
-            onPageClick: function (event, page) {
-            	if (currentPage != page) {
-            		window.location.href="/karma/listproduct?page="+page+"&limit=9";
-				}
-            }
-        });
-    });
-</script>
+	
 	
 	
 </body>

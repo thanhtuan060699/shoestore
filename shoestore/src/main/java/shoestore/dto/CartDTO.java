@@ -1,31 +1,31 @@
 package shoestore.dto;
 
-public class ProductDTO {
-	private Long id;
+public class CartDTO {
+	private int id;
 	
 	private String name;
-	
-	private Integer limit;
-	
-	private Integer totalPage;
-	
-	private Integer page;
 	
 	private String color;
 	
 	private Double size;
 	
+	private Integer quantity;
+	
 	private Long price;
 	
-	private Integer quantity;
+	private Long total;
+	
+	private Long subTotal;
+
+	private Integer maxQuantity;
 	
 	private Long productAttributeId;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -35,30 +35,6 @@ public class ProductDTO {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getLimit() {
-		return limit;
-	}
-
-	public void setLimit(Integer limit) {
-		this.limit = limit;
-	}
-
-	public Integer getTotalPage() {
-		return totalPage;
-	}
-
-	public void setTotalPage(Integer totalPage) {
-		this.totalPage = totalPage;
-	}
-
-	public Integer getPage() {
-		return page;
-	}
-
-	public void setPage(Integer page) {
-		this.page = page;
 	}
 
 	public String getColor() {
@@ -77,6 +53,14 @@ public class ProductDTO {
 		this.size = size;
 	}
 
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
 	public Long getPrice() {
 		return price;
 	}
@@ -85,12 +69,28 @@ public class ProductDTO {
 		this.price = price;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
+	public Long getTotal() {
+		return total;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setTotal(Long total) {
+		this.total = total;
+	}
+
+	public Long getSubTotal() {
+		return subTotal;
+	}
+
+	public void setSubTotal(Long subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	public Integer getMaxQuantity() {
+		return maxQuantity;
+	}
+
+	public void setMaxQuantity(Integer maxQuantity) {
+		this.maxQuantity = maxQuantity;
 	}
 
 	public Long getProductAttributeId() {
@@ -100,6 +100,8 @@ public class ProductDTO {
 	public void setProductAttributeId(Long productAttributeId) {
 		this.productAttributeId = productAttributeId;
 	}
+
+	
 	
 	
 }

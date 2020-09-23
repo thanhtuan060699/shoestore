@@ -1,5 +1,6 @@
 package shoestore.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import shoestore.convert.ProductAttributeConverter;
 import shoestore.convert.ProductConverter;
 import shoestore.dto.ProductAttributeDTO;
+import shoestore.dto.ProductDTO;
 import shoestore.entity.ProductAttributeEntity;
 import shoestore.entity.ProductEntity;
 import shoestore.repository.ProductAttributeRepository;
@@ -38,6 +40,17 @@ public class ProductAttributeService implements IProductAttributeService{
 		ProductAttributeEntity productAttributeEntity=productAttributeRepository.
 				findByColorAndSizeAndProductEntity(productAttributeDTO.getColor(),productAttributeDTO.getSize(), productEntity);
 		return productAttributeConverter.convertToDTO(productAttributeEntity);
+	}
+
+	@Override
+	public List<ProductAttributeDTO> findSampleOfProduct(List<ProductDTO> productDTOs) {
+		List<ProductAttributeDTO> productAttributeDTOs=new ArrayList<ProductAttributeDTO>();
+		for(ProductDTO productDTO:productDTOs) {
+			ProductEntity productEntity=productRepository.findOne(productDTO.getId());
+			List<ProductAttributeEntity> productAttributes=productAttributeRepository.findAllByProductEntity(productEntity);
+			productAttributeDTOs.add(productAttributeConverter.convertToDTO(productAttributes.get(0)));
+		}
+		return productAttributeDTOs;
 	}
 
 }

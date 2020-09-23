@@ -95,7 +95,8 @@
 				<!-- Start Best Seller -->
 				<section class="lattest-product-area pb-40 category-list">
 					<div class="row">
-						<c:forEach var="item" items="${listProducts}">
+					
+						<c:forEach var="item" items="${listProducts }">
 						
 						<!-- single product -->
 						
@@ -104,16 +105,26 @@
 								<img class="img-fluid" src="/template/web/img/product/p1.jpg" alt="">
 								<div class="product-details">
 									<h6>${item.name }</h6>
-									<div class="price">
-										<h6>$150.00</h6>
-										<h6 class="l-through">$210.00</h6>
+									<div class="listproduct-price" data-price="${item.price }" data-name="${item.name }">
+										<h6>${item.price} VND</h6>
+										<!-- <h6 class="l-through">$210.00</h6> -->
+									</div>
+									<div class="listproduct-color" data-color="${item.color }" data-quantity="${item.quantity}">
+										<h6>Color : ${item.color}</h6>
+										<!-- <h6 class="l-through">$210.00</h6> -->
+									</div>
+									<div class="listproduct-size" data-size="${item.size}" data-at="${item.productAttributeId }">
+										<h6>Size : ${item.size} VN</h6>
+										<!-- <h6 class="l-through">$210.00</h6> -->
 									</div>
 									<div class="prd-bottom">
-
-										<a href="/karma/detailproduct?id=${item.id }" class="social-info">
-											<span class="ti-bag"></span>
-											<p class="hover-text">add to bag</p>
-										</a>
+										<div class="social-info btn-add-cart " data-id="${item.id}"  onclick="addCart(${item.id})">
+											<div class="btn-cart">
+												<span class="ti-bag"></span>
+												<p class="hover-text " >add to bag</p>
+											</div>
+											
+										</div>
 										<a href="" class="social-info">
 											<span class="lnr lnr-heart"></span>
 											<p class="hover-text">Wishlist</p>
@@ -122,7 +133,7 @@
 											<span class="lnr lnr-sync"></span>
 											<p class="hover-text">compare</p>
 										</a>
-										<a href="" class="social-info">
+										<a href="/karma/detailproduct?id=${item.id }" class="social-info">
 											<span class="lnr lnr-move"></span>
 											<p class="hover-text">view more</p>
 										</a>
@@ -131,6 +142,7 @@
 							</div>
 						</div>
 						</c:forEach>
+				
 						</div>
 				</section>
 				<!-- End Best Seller -->
@@ -290,7 +302,41 @@
 		</div>
 	</section>
 	<!-- End related-product Area -->
-	
-	
+	<script src="<c:url value='/template/web/js/vendor/jquery-2.2.4.min.js' />"></script>
+	<script src="<c:url value='/template/web/js/jsmain/listproduct.js' />"></script>
+	<script >
+	var totalPages = ${totalPage};
+	var currentPage = ${page};
+    $(function () {
+    	
+        window.pagObj = $('#pagination').twbsPagination({
+        	totalPages: totalPages,
+            visiblePages: 3,
+            startPage: currentPage,
+            onPageClick: function (event, page) {
+            	if (currentPage != page) {
+            		window.location.href="/karma/listproduct?page="+page+"&limit=9";
+				}
+            }
+        });
+    });
+</script>
+<script >
+	var totalPages = ${totalPage};
+	var currentPage = ${page};
+    $(function () {
+    	
+        window.pagObj = $('#pagination1').twbsPagination({
+        	totalPages: totalPages,
+            visiblePages: 3,
+            startPage: currentPage,
+            onPageClick: function (event, page) {
+            	if (currentPage != page) {
+            		window.location.href="/karma/listproduct?page="+page+"&limit=9";
+				}
+            }
+        });
+    });
+</script>
 </body>
 </html>

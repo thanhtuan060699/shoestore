@@ -12,16 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import shoestore.util.SessionUtil;
+
 @Controller
 public class HomeController {
 	@RequestMapping(value = "/home",method = RequestMethod.GET)
-	public ModelAndView home() {
+	public ModelAndView home(HttpServletRequest request) {
 		ModelAndView modelAndView=new ModelAndView("home");
+		modelAndView.addObject("amounts", SessionUtil.getInstance().getValue(request, "amounts"));
 		return modelAndView;
 	}
 	@RequestMapping(value = "/login",method = RequestMethod.GET)
-	public ModelAndView login() {
+	public ModelAndView login(HttpServletRequest request) {
 		ModelAndView modelAndView=new ModelAndView("web/weblogin");
+		modelAndView.addObject("amounts", SessionUtil.getInstance().getValue(request, "amounts"));
 		return modelAndView;
 	}
 	
