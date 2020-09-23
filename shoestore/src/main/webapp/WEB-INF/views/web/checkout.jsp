@@ -38,7 +38,7 @@
                         <form id="formEdit">
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="fullname" name="fullname">
-                                <span class="placeholder" data-placeholder="Full Name"></span>
+                                <span class="placeholder" data-placeholder="Full Name" placeholder></span>
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="phoneNumber" name="phoneNumber">

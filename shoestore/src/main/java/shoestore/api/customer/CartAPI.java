@@ -52,7 +52,7 @@ public class CartAPI {
 		return subTotal;
 	}
 	@RequestMapping(value = "/api/cart/add/increase",method = RequestMethod.POST)
-	public @ResponseBody CartDTO increaseQuantityAddCard(@RequestBody CartDTO cartDTO) {
+	public @ResponseBody CartDTO increaseQuantityAddCart(@RequestBody CartDTO cartDTO) {
 		if(cartDTO.getQuantity()<cartDTO.getMaxQuantity()) {
 			cartDTO.setQuantity(cartDTO.getQuantity()+1);
 		}
@@ -60,7 +60,7 @@ public class CartAPI {
 	}
 	
 	@RequestMapping(value = "/api/cart/add/reduce",method = RequestMethod.POST)
-	public @ResponseBody CartDTO reduceQuantityAddCard(@RequestBody CartDTO cartDTO) {
+	public @ResponseBody CartDTO reduceQuantityAddCart(@RequestBody CartDTO cartDTO) {
 		if(cartDTO.getQuantity()!=1)
 		{
 			cartDTO.setQuantity(cartDTO.getQuantity()-1);
@@ -69,7 +69,7 @@ public class CartAPI {
 	}
 	
 	@RequestMapping(value = "/api/cart/add/change",method = RequestMethod.POST)
-	public @ResponseBody CartDTO changeQuantityAddCard(@RequestBody CartDTO cartDTO) {
+	public @ResponseBody CartDTO changeQuantityAddCart(@RequestBody CartDTO cartDTO) {
 		if(cartDTO.getQuantity()>cartDTO.getMaxQuantity()) {
 			cartDTO.setQuantity(cartDTO.getMaxQuantity());
 		}
@@ -80,7 +80,7 @@ public class CartAPI {
 	}
 	
 	@RequestMapping(value = "/api/cart/edit/increase",method = RequestMethod.POST)
-	public @ResponseBody HashMap<String,Object> increaseQuantityEditCard(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
+	public @ResponseBody HashMap<String,Object> increaseQuantityEditCart(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
 		HashMap<String, Object> hashMap=new HashMap<String, Object>();
 		if(cartDTO.getQuantity()<cartDTO.getMaxQuantity()) {
 			List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
@@ -103,7 +103,7 @@ public class CartAPI {
 		return hashMap;
 	}
 	@RequestMapping(value = "/api/cart/edit/reduce",method = RequestMethod.POST)
-	public @ResponseBody HashMap<String, Object> reduceQuantityEditCard(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
+	public @ResponseBody HashMap<String, Object> reduceQuantityEditCart(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
 		HashMap<String,Object> hashMap=new HashMap<String, Object>();
 		List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");;
 		if(cartDTO.getQuantity()>1) {
