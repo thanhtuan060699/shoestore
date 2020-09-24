@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import shoestore.dto.CartDTO;
+import shoestore.dto.StatementDTO;
 import shoestore.util.SessionUtil;
 
 @RestController
@@ -26,7 +27,7 @@ public class CartAPI {
 			cartDTOs.add(cartDTO);
 			cartDTO.setId(1);
 			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
-			SessionUtil.getInstance().putValue(request, "amounts", getSubTotalQuantity(cartDTOs));
+			SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
 			
 		}else {
 			List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
@@ -38,18 +39,18 @@ public class CartAPI {
 			Integer id=cartDTOs.get(cartDTOs.size()-1).getId()+1;
 	 		cartDTO.setId(id);
 	 		cartDTOs.add(cartDTO);
-	 		SessionUtil.getInstance().putValue(request, "amounts", getSubTotalQuantity(cartDTOs));
+	 		SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
 	 		SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
 			
 		}
 		return (Integer) SessionUtil.getInstance().getValue(request, "amounts");
 	}
-	private Integer getSubTotalQuantity(List<CartDTO> cartDTOs) {
-		Integer subTotal=0;
+	private Integer getSumTotalQuantity(List<CartDTO> cartDTOs) {
+		Integer sumTotal=0;
 		for(CartDTO cartDTO : cartDTOs) {
-			subTotal=subTotal+cartDTO.getQuantity();
+			sumTotal=sumTotal+cartDTO.getQuantity();
 		}
-		return subTotal;
+		return sumTotal;
 	}
 	@RequestMapping(value = "/api/cart/add/increase",method = RequestMethod.POST)
 	public @ResponseBody CartDTO increaseQuantityAddCart(@RequestBody CartDTO cartDTO) {
@@ -91,15 +92,20 @@ public class CartAPI {
 				}
 			}
 			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
-			Long subTotal=subTotalPrice(cartDTOs);
+			Long subTotal=sumTotalPrice(cartDTOs);
 			cartDTO.setQuantity(cartDTO.getQuantity()+1);
 			Long total=(Long)(cartDTO.getQuantity()*cartDTO.getPrice());
 			cartDTO.setTotal(total);
-			Integer subQuantity=subQuantity(cartDTOs);
+			Integer subQuantity=sumQuantity(cartDTOs);
 			hashMap.put("cartChange", cartDTO);
 			hashMap.put("subTotal", subTotal);
 			hashMap.put("subQuantity", subQuantity);
+		}else {
+			cartDTO.setTotal((Long)(cartDTO.getQuantity()*cartDTO.getPrice()));
+			hashMap.put("cartChange", cartDTO);
 		}
+		
+		
 		return hashMap;
 	}
 	@RequestMapping(value = "/api/cart/edit/reduce",method = RequestMethod.POST)
@@ -123,8 +129,8 @@ public class CartAPI {
 		}else {
 			cartDTO.setTotal(cartDTO.getPrice());
 		}
-		Integer subQuantity=subQuantity(cartDTOs);
-		Long subTotal=subTotalPrice(cartDTOs);
+		Integer subQuantity=sumQuantity(cartDTOs);
+		Long subTotal=sumTotalPrice(cartDTOs);
 		hashMap.put("cartChange", cartDTO);
 		hashMap.put("subTotal", subTotal);
 		hashMap.put("subQuantity", subQuantity);
@@ -158,38 +164,52 @@ public class CartAPI {
 			}
 		}
 		hashMap.put("cartChange", cartDTO);
-		Long subTotal=subTotalPrice(cartDTOs);
+		Long subTotal=sumTotalPrice(cartDTOs);
 		hashMap.put("subTotal", subTotal);
 		SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
-		Integer subQuantity=subQuantity(cartDTOs);
+		Integer subQuantity=sumQuantity(cartDTOs);
 		hashMap.put("subQuantity", subQuantity);
 		return hashMap;
 	}
 	@RequestMapping(value = "/api/cart/add/list",method = RequestMethod.POST)
-	public @ResponseBody Integer  addCartFromListProduct(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
+	public @ResponseBody HashMap<String, Object>  addCartFromListProduct(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
+		HashMap<String, Object> hashMap=new HashMap<String, Object>();
 		cartDTO.setQuantity(1);
 		cartDTO.setTotal(cartDTO.getPrice()*cartDTO.getQuantity());
+		StatementDTO statementDTO=new StatementDTO(true, 200, "add cart successful");
 		if(SessionUtil.getInstance().getValue(request, "carts")==null) {
 			List<CartDTO> cartDTOs=new ArrayList<CartDTO>();
 			cartDTOs.add(cartDTO);
 			cartDTO.setId(1);
 			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
-			SessionUtil.getInstance().putValue(request, "amounts", getSubTotalQuantity(cartDTOs));
+			SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
 			
 		}else {
 			List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
 			for(CartDTO cart: cartDTOs) {
 				if(cart.getProductAttributeId()==cartDTO.getProductAttributeId()) {
-					return 0;
+					if(cart.getQuantity()<cart.getMaxQuantity()) {
+						cart.setQuantity(cart.getQuantity()+1);
+					}
+					SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
+		 			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
+		 			StatementDTO statement=new StatementDTO(true, 200, "product existed");
+		 			hashMap.put("amounts", getSumTotalQuantity(cartDTOs));
+		 			hashMap.put("statement", statement);
+		 			return hashMap;
 				}
+				
 			}
  			Integer id=cartDTOs.get(cartDTOs.size()-1).getId()+1;
  			cartDTO.setId(id);
  			cartDTOs.add(cartDTO);
- 			SessionUtil.getInstance().putValue(request, "amounts", getSubTotalQuantity(cartDTOs));
+ 			SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
  			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
 		}
-		return (Integer) SessionUtil.getInstance().getValue(request, "amounts");
+		hashMap.put("statement",statementDTO);
+		hashMap.put("amounts", (Integer) SessionUtil.getInstance().getValue(request, "amounts"));
+		return hashMap;
+
 	}
 	
 	@RequestMapping(value = "/api/cart/delete",method = RequestMethod.POST)
@@ -205,19 +225,19 @@ public class CartAPI {
 		return cartDTOs;
 		
 	}
-   private Long subTotalPrice(List<CartDTO> cartDTOs) {
-		Long subTotal = (long) 0;
+   private Long sumTotalPrice(List<CartDTO> cartDTOs) {
+		Long sumTotal = (long) 0;
 		for(CartDTO cartDTO : cartDTOs) {
-			subTotal=subTotal+cartDTO.getTotal();
+			sumTotal=sumTotal+cartDTO.getTotal();
 		}
-		return subTotal;
+		return sumTotal;
 	}
-	private Integer subQuantity(List<CartDTO> cartDTOs) {
-		Integer subQuantity=0;
+	private Integer sumQuantity(List<CartDTO> cartDTOs) {
+		Integer sumQuantity=0;
 		for(CartDTO cartDTO:cartDTOs) {
-			subQuantity=subQuantity+cartDTO.getQuantity();
+			sumQuantity=sumQuantity+cartDTO.getQuantity();
 		}
-		return subQuantity;
+		return sumQuantity;
 	}
 	
 }

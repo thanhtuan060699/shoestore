@@ -37,36 +37,36 @@
                         <h3>Billing Details</h3>
                         <form id="formEdit">
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="fullname" name="fullname">
-                                <span class="placeholder" data-placeholder="Full Name" placeholder></span>
+                                <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full Name *">
+                                <div class="inform-validate" style="color: red;"></div>
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber">
-                                <span class="placeholder" data-placeholder="Phone number"></span>
+                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Number *">
+                                <div class="inform-validate"></div>
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="email" name="email">
-                                <span class="placeholder" data-placeholder="Email Address"></span>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Email*">
+                                <div class="inform-validate"></div>
                             </div>
                             
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="address" name="address">
-                                <span class="placeholder" data-placeholder="Address"></span>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Address*">
+                                <div class="inform-validate"></div>
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="province" name="province">
-                                <span class="placeholder" data-placeholder="City/Province"></span>
+                                <input type="text" class="form-control" id="province" name="province" placeholder="Province*">
+                                <div class="inform-validate"></div>
                             </div>
                         	 <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="district" name="district">
-                                <span class="placeholder" data-placeholder="District"></span>
+                                <input type="text" class="form-control" id="district" name="district" placeholder="District*">
+                                <div class="inform-validate"></div>
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="ward" name="ward">
-                                <span class="placeholder" data-placeholder="Ward"></span>
+                                <input type="text" class="form-control" id="ward" name="ward" placeholder="Ward*">
+                                <div class="inform-validate"></div>
                             </div>
                             <div class="col-md-12 form-group">
-                                <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
+                                <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes*"></textarea>
                             </div>
                         </form>
                     </div>
@@ -82,8 +82,8 @@
                                 
                             </ul>
                             <ul class="list list_2">
-                                <li><a href="#">Subtotal <span>$2160.00</span></a></li>
-                                <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
+                                <li><a href="#">Subtotal <span>${sumTotalPrice} VND</span></a></li>
+                                <li><a href="#">Shipping <span>Flat rate: O VND</span></a></li>
                                 <li><a href="#">Total <span>$2210.00</span></a></li>
                             </ul>
                             <div class="payment_item">
@@ -107,7 +107,7 @@
                             </div>
                             <div class="creat_account">
                                 <input type="checkbox" id="f-option4" name="selector">
-                                <label for="f-option4">I’ve read and accept the </label>
+                                <label for="f-option4" class="conditions">I’ve read and accept the </label>
                                 <a href="#">terms & conditions*</a>
                             </div>
                            	    <button class="primary-btn btn-order" style="margin-left: 84px">Order</button>
@@ -120,5 +120,7 @@
         </div>
     </section>
     <!--================End Checkout Area =================-->
+    <script src="<c:url value='/template/web/js/vendor/jquery-2.2.4.min.js' />"></script>
+    <script src="<c:url value='/template/web/js/jsmain/checkout.js' />"></script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+<%@include file="/common/taglib.jsp"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -63,6 +64,11 @@
 			</div>
 		</div>
 	</section>
+	<c:if test="${not empty checkoutlogin }">
+		<script type="text/javascript">
+			alert('You need to login before check out');
+		</script>
+	</c:if>
 	<!--================End Login Box Area =================-->
 </body>
 </html>

@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import shoestore.util.SessionUtil;
@@ -23,8 +24,11 @@ public class HomeController {
 		return modelAndView;
 	}
 	@RequestMapping(value = "/login",method = RequestMethod.GET)
-	public ModelAndView login(HttpServletRequest request) {
+	public ModelAndView login(HttpServletRequest request,@RequestParam(required = false) String nonlogin ) {
 		ModelAndView modelAndView=new ModelAndView("web/weblogin");
+		if(nonlogin!=null) {
+			modelAndView.addObject("checkoutlogin", "true");
+		}
 		modelAndView.addObject("amounts", SessionUtil.getInstance().getValue(request, "amounts"));
 		return modelAndView;
 	}

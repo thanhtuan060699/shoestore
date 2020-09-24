@@ -2,6 +2,7 @@ package shoestore.controller.customer;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,26 @@ import shoestore.util.SessionUtil;
 public class CheckOutController {
 	@RequestMapping(value = "/karma/checkout",method = RequestMethod.GET)
 	public ModelAndView showCheckOut(HttpServletRequest request) {
-		ModelAndView modelAndView=new ModelAndView("web/checkout");
-		List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
-		modelAndView.addObject("products", cartDTOs);
-		return modelAndView;
+		Cookie[] cookies=request.getCookies();
+		for(Cookie cookie: cookies) {
+			if(cookie.getName().equals("TOKEN")) {
+				ModelAndView modelAndView=new ModelAndView("web/checkout");
+				List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
+				modelAndView.addObject("products", cartDTOs);
+				modelAndView.addObject("sumTotalPrice", sumTotalPrice(cartDTOs));
+				return modelAndView;
+
+			}
+		}
+		return new ModelAndView("redirect: "+"/login?nonlogin=true");
+		
 	}
+	private Long sumTotalPrice(List<CartDTO> cartDTOs) {
+		Long sumTotalPrice=(long) 0;
+		for(CartDTO cartDTO: cartDTOs) {
+			sumTotalPrice=sumTotalPrice+cartDTO.getTotal();
+		}
+		return sumTotalPrice;
+	}
+			
 }

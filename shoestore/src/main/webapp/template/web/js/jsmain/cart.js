@@ -22,8 +22,7 @@
                 dataType: "json",
                 contentType:"application/json",
                 success: function (response) {
-                    console.log(i);
-                    console.log(response.cartChange.total);
+                   
                     if(response.quantity==maxQuantity){
                     var alert=document.getElementsByClassName('alert-quantity')[0];
                     alert.innerHTML='<div class="alert alert-danger">This product just have '+maxQuantity+' in the stonk</div>';
@@ -38,7 +37,7 @@
                         var subTotal=document.getElementsByClassName('sub-total')[0];
                         subTotal.innerHTML=response.subTotal+' VND';
                         var numberCart=document.getElementsByClassName('numberCart')[0];
-                        numberCart.innerHTML=response.subQuantity+'';
+                        numberCart.innerHTML='('+response.subQuantity+')';
                     }
                     });
                  break;
@@ -82,7 +81,7 @@ function  reduceCart(id) {
                     var subTotal=document.getElementsByClassName('sub-total')[0];
                     subTotal.innerHTML=response.subTotal+' VND';
                     var numberCart=document.getElementsByClassName('numberCart')[0];
-                    numberCart.innerHTML=response.subQuantity+'';
+                    numberCart.innerHTML='('+response.subQuantity+')';
                 }
                 });
                     break;

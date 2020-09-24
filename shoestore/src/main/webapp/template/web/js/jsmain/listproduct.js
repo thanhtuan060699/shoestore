@@ -23,14 +23,16 @@
                 dataType: "json",
                 contentType:"application/json",
                 success: function (response) {
-                    if(response==0){
-                       alert('This product have already existed');
-                    }else{
-                       alert('Add in cart successful')
-                       var numberCart=document.getElementsByClassName('numberCart')[0];
-                       numberCart.outerHTML='<span class="numberCart">('+response+')</span>';
-                    }
-                        
+                	console.log(response);
+                  if(response.statement.message==='product existed'){
+                    var numberCart=document.getElementsByClassName('numberCart')[0];
+                    numberCart.outerHTML='<span class="numberCart">('+response.amounts+')</span>'; 
+                  }else {
+                    alert('Add in cart successful')
+                    var numberCart=document.getElementsByClassName('numberCart')[0];
+                    numberCart.outerHTML='<span class="numberCart">('+response.amounts+')</span>'; 
+                  }
+                          
              }
             });
             break;
