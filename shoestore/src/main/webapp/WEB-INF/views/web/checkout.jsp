@@ -37,7 +37,7 @@
                         <h3>Billing Details</h3>
                         <form id="formEdit">
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full Name *">
+                                <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name *">
                                 <div class="inform-validate" style="color: red;"></div>
                             </div>
                             <div class="col-md-12 form-group p_star">
@@ -66,7 +66,7 @@
                                 <div class="inform-validate"></div>
                             </div>
                             <div class="col-md-12 form-group">
-                                <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes*"></textarea>
+                                <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
                             </div>
                         </form>
                     </div>

@@ -101,8 +101,13 @@ public class CartAPI {
 			hashMap.put("subTotal", subTotal);
 			hashMap.put("subQuantity", subQuantity);
 		}else {
+			List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
+			Long subTotal=sumTotalPrice(cartDTOs);
 			cartDTO.setTotal((Long)(cartDTO.getQuantity()*cartDTO.getPrice()));
 			hashMap.put("cartChange", cartDTO);
+			Integer subQuantity=sumQuantity(cartDTOs);
+			hashMap.put("subTotal", subTotal);
+			hashMap.put("subQuantity", subQuantity);
 		}
 		
 		
@@ -213,16 +218,30 @@ public class CartAPI {
 	}
 	
 	@RequestMapping(value = "/api/cart/delete",method = RequestMethod.POST)
-	public @ResponseBody List<CartDTO> deleteCart(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
+	public @ResponseBody HashMap<String , Object> deleteCart(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
 		List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
+		HashMap<String, Object> hashMap=new HashMap<String, Object>();
 		for(CartDTO cart:cartDTOs) {
 			if(cart.getId()==cartDTO.getId()) {
 				cartDTOs.remove(cart);
 				break;
 			}
 		}
+		Long sumPrice;
+		Integer sumQuantity;
+		if(cartDTOs.size()!=0) {
+			sumPrice=sumTotalPrice(cartDTOs);
+			sumQuantity=sumQuantity(cartDTOs);
+		}
+		else {
+			sumPrice=(long) 0;
+			sumQuantity=0;
+		}
+		hashMap.put("carts", cartDTOs);
+		hashMap.put("sumPrice", sumPrice);
+		hashMap.put("sumQuantity", sumQuantity);
 		SessionUtil.getInstance().putValue(request,"carts", cartDTOs);
-		return cartDTOs;
+		return hashMap;
 		
 	}
    private Long sumTotalPrice(List<CartDTO> cartDTOs) {

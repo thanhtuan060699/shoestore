@@ -15,7 +15,8 @@ public class OrderDTO {
 	
 	private String ward;
 	
-	private String orderNote;
+	private String message;
+	
 
 	public String getFullName() {
 		return fullName;
@@ -73,14 +74,13 @@ public class OrderDTO {
 		this.ward = ward;
 	}
 
-	public String getOrderNote() {
-		return orderNote;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setOrderNote(String orderNote) {
-		this.orderNote = orderNote;
+	public void setMessage(String message) {
+		this.message = message;
 	}
-	
-	
+
 	
 }

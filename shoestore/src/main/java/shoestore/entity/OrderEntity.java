@@ -45,6 +45,12 @@ public class OrderEntity extends BaseEntity{
 	@Column(name="adminstatus")
 	private Integer adminStatus;
 	
+	@Column(name="message")
+	private String message;
+	
+	@Column(name="fullname")
+	private String fullName;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="user_id")
 	private UserEntity userEntity;
@@ -146,6 +152,22 @@ public class OrderEntity extends BaseEntity{
 
 	public void setOrderDetailEntities(List<OrderDetailEntity> orderDetailEntities) {
 		this.orderDetailEntities = orderDetailEntities;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 	
 	
