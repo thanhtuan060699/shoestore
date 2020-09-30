@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+encoding//src/main/java/shoestore/api/customer/CheckOutAPI.java=UTF-8
+encoding//src/main/java/shoestore/service/impl/PaymentRequestService.java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/web/paymentresult.jsp=UTF-8

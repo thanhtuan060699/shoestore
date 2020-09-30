@@ -97,16 +97,28 @@
                             </div>
                             <div class="payment_item active">
                                 <div class="radion_btn">
-                                    <input type="radio" id="f-option6" name="selector">
-                                    <label for="f-option6">Paypal </label>
+                                    <input type="radio" id="f-option6" name="selector" data-payment="onePay">
+                                    <label for="f-option6">Pay By ATM Card </label>
                                     <img src="/template/web/img/product/card.jpg" alt="">
                                     <div class="check"></div>
                                 </div>
+                             
+                                <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
+                                    account.</p>
+                            </div>
+                            <div class="payment_item ">
+                                <div class="radion_btn">
+                                    <input type="radio" id="f-option7" name="selector" data-payment="onePay">
+                                    <label for="f-option7">Pay By Master Card,Visa Card </label>
+                                    <img src="/template/web/img/product/card.jpg" alt="">
+                                    <div class="check"></div>
+                                </div>
+                             
                                 <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
                                     account.</p>
                             </div>
                             <div class="creat_account">
-                                <input type="checkbox" id="f-option4" name="selector">
+                                <input type="checkbox" id="f-option4" name="selector" >
                                 <label for="f-option4" class="conditions">I’ve read and accept the </label>
                                 <a href="#">terms & conditions*</a>
                             </div>

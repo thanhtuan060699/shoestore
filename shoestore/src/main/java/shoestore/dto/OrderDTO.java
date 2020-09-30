@@ -1,6 +1,8 @@
 package shoestore.dto;
 
 public class OrderDTO {
+	private Long id;
+	
 	private String fullName;
 	
 	private String phoneNumber;
@@ -17,7 +19,8 @@ public class OrderDTO {
 	
 	private String message;
 	
-
+	private String methodPayment;
+	
 	public String getFullName() {
 		return fullName;
 	}
@@ -80,6 +83,22 @@ public class OrderDTO {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public String getMethodPayment() {
+		return methodPayment;
+	}
+
+	public void setMethodPayment(String methodPayment) {
+		this.methodPayment = methodPayment;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	

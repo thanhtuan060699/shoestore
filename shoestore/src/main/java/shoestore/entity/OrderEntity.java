@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -51,12 +52,23 @@ public class OrderEntity extends BaseEntity{
 	@Column(name="fullname")
 	private String fullName;
 	
+	@Column(name="methodPayment")
+	private String methodPayment;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="user_id")
 	private UserEntity userEntity;
 	
 	@OneToMany(mappedBy = "orderEntity")
 	private List<OrderDetailEntity> orderDetailEntities =new ArrayList<OrderDetailEntity>();
+	
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="onepayRequestID")
+    private PaymentRequestEntity paymentRequestEntity;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="onepayResponseID")
+    private PaymentResponseEntity paymentResponseEntity;
 
 	public Long getTotalPrice() {
 		return totalPrice;
@@ -168,6 +180,30 @@ public class OrderEntity extends BaseEntity{
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	public PaymentRequestEntity getPaymentRequestEntity() {
+		return paymentRequestEntity;
+	}
+
+	public void setPaymentRequestEntity(PaymentRequestEntity paymentRequestEntity) {
+		this.paymentRequestEntity = paymentRequestEntity;
+	}
+
+	public PaymentResponseEntity getPaymentResponseEntity() {
+		return paymentResponseEntity;
+	}
+
+	public void setPaymentResponseEntity(PaymentResponseEntity paymentResponseEntity) {
+		this.paymentResponseEntity = paymentResponseEntity;
+	}
+
+	public String getMethodPayment() {
+		return methodPayment;
+	}
+
+	public void setMethodPayment(String methodPayment) {
+		this.methodPayment = methodPayment;
 	}
 	
 	

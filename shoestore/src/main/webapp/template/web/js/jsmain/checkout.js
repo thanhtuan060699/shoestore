@@ -9,6 +9,14 @@ document.addEventListener("DOMContentLoaded",function(){
             $.each(formData,function(index,v){
                 data[""+v.name+""]=v.value;
             });
+            var atm=document.getElementById('f-option6');
+            var payment=null;
+           
+            if(atm.checked){
+              payment=atm.getAttribute('data-payment');
+            }
+            
+            data["methodPayment"]=payment;
              if(check_box_rule.checked==false){
                  var condition=document.getElementsByClassName('conditions')[0];
                  condition.outerHTML='<label for="f-option4" style="color: red;font-size: 14px" class="conditions">I need to read and accept the </label>';
@@ -21,8 +29,7 @@ document.addEventListener("DOMContentLoaded",function(){
                      contentType:"application/json",
                      success: function (response) {
                        if(response.success==true){
-                           alert('Your shoes will be delivered to your hand as soon as possible !!! Thanks for your supporting');
-                           window.location.href="/home";
+                           window.location.href=""+response.message;
                        }
                     }
                  });
@@ -36,7 +43,7 @@ document.addEventListener("DOMContentLoaded",function(){
 function validate(){
         var index=0;
          //validate fullname
-        var fullname=document.getElementById('fullname');
+        var fullname=document.getElementById('fullName');
         if(fullname.value==null||fullname.value==''){
            var inform_validate=document.getElementsByClassName('inform-validate')[0];
            inform_validate.outerHTML='<div class="inform-validate" style="color: red;"> You need to fill out the name column</div>';

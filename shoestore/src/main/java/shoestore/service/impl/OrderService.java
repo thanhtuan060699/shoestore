@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import shoestore.convert.OrderConverter;
+import shoestore.convert.PaymentRequestConverter;
 import shoestore.dto.CartDTO;
 import shoestore.dto.OrderDTO;
+import shoestore.dto.PaymentRequestDTO;
 import shoestore.dto.UserDTO;
 import shoestore.entity.OrderDetailEntity;
 import shoestore.entity.OrderEntity;
+import shoestore.entity.PaymentRequestEntity;
+import shoestore.entity.PaymentResponseEntity;
 import shoestore.entity.ProductAttributeEntity;
 import shoestore.entity.UserEntity;
 import shoestore.repository.OrderDetailRepository;
@@ -37,8 +41,11 @@ public class OrderService implements IOrderService{
 	@Autowired
 	ProductAttributeRepository productAttributeRepository;
 	
+	@Autowired
+	PaymentRequestConverter paymentRequestConverter;
+	
 	@Override
-	public void addNewOrder(UserDTO userDTO, OrderDTO orderDTO, List<CartDTO> cartDTOs) {
+	public OrderDTO addNewOrder(UserDTO userDTO, OrderDTO orderDTO, List<CartDTO> cartDTOs) {
 		UserEntity userEntity=userRepository.findOne(userDTO.getId());
 		// add table order
 		OrderEntity orderEntity=orderConverter.convertToEntity(orderDTO);
@@ -57,12 +64,14 @@ public class OrderService implements IOrderService{
 			orderDetailEntity.setOrderEntity(orderEntity);
 			orderDetailReposity.save(orderDetailEntity);
 		}
+		
 		//reduce quantity in table product attribute
 		for(CartDTO cartDTO: cartDTOs) {
 			ProductAttributeEntity productAttributeEntity=productAttributeRepository.findOne(cartDTO.getProductAttributeId());
 			productAttributeEntity.setQuantity(cartDTO.getMaxQuantity()-cartDTO.getQuantity());
 			productAttributeRepository.save(productAttributeEntity);
 		}
+		return orderConverter.convertToDTO(orderEntity);
 	}
 	
 	private Integer sumQuantity(List<CartDTO> cartDTOs) {
@@ -79,6 +88,15 @@ public class OrderService implements IOrderService{
 			sumPrice=sumPrice+cartDTO.getPrice();
 		}
 		return sumPrice;
+	}
+
+	@Override
+	public void updatePaymentRequest(OrderDTO orderDTO, PaymentRequestDTO paymentRequestDTO) {
+		OrderEntity orderEntity=orderConverter.convertToEntity(orderDTO);
+		PaymentRequestEntity paymentRequestEntity=paymentRequestConverter.convertToEntity(paymentRequestDTO);
+		orderEntity.setPaymentRequestEntity(paymentRequestEntity);
+		orderRepository.save(orderEntity);
+		
 	}
 
 }
