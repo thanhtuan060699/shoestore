@@ -21,7 +21,7 @@ public class PaymentResponseEntity {
 	private Long purchaseAmount;
 	
 	@Column(name="response_code")
-	private int responseCode;
+	private String responseCode;
 	
 	@Column(name="order_info")
 	private String orderInfo;
@@ -29,8 +29,8 @@ public class PaymentResponseEntity {
 	@Column(name="secure_hash")
 	private String secureHash;
 	
-	@Column(name="title")
-	private String title;
+	@Column(name="type_card")
+	private String typeCard;
 	
 	@Column(name="message")
 	private String message;
@@ -60,14 +60,6 @@ public class PaymentResponseEntity {
 		this.purchaseAmount = purchaseAmount;
 	}
 
-	public int getResponseCode() {
-		return responseCode;
-	}
-
-	public void setResponseCode(int responseCode) {
-		this.responseCode = responseCode;
-	}
-
 	public String getOrderInfo() {
 		return orderInfo;
 	}
@@ -82,14 +74,6 @@ public class PaymentResponseEntity {
 
 	public void setSecureHash(String secureHash) {
 		this.secureHash = secureHash;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public String getMessage() {
@@ -123,7 +107,21 @@ public class PaymentResponseEntity {
 	public void setOrderEntity(OrderEntity orderEntity) {
 		this.orderEntity = orderEntity;
 	}
-	
-	
+
+	public String getTypeCard() {
+		return typeCard;
+	}
+
+	public void setTypeCard(String typeCard) {
+		this.typeCard = typeCard;
+	}
+
+	public String getResponseCode() {
+		return responseCode;
+	}
+
+	public void setResponseCode(String responseCode) {
+		this.responseCode = responseCode;
+	}
 	
 }

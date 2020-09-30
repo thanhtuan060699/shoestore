@@ -5,15 +5,18 @@ public class PaymentResponseDTO {
 	
 	private Long purchaseAmount;
 	
-	private int responseCode;
+	private String responseCode;
 	
 	private String orderInfo;
 	
 	private String secureHash;
 	
-	private String title;
+	private String typeCard;
 	
 	private String message;
+	
+	private String transStatus;
+
 
 	public Long getId() {
 		return id;
@@ -29,14 +32,6 @@ public class PaymentResponseDTO {
 
 	public void setPurchaseAmount(Long purchaseAmount) {
 		this.purchaseAmount = purchaseAmount;
-	}
-
-	public int getResponseCode() {
-		return responseCode;
-	}
-
-	public void setResponseCode(int responseCode) {
-		this.responseCode = responseCode;
 	}
 
 	public String getOrderInfo() {
@@ -63,15 +58,29 @@ public class PaymentResponseDTO {
 		this.secureHash = secureHash;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getResponseCode() {
+		return responseCode;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setResponseCode(String responseCode) {
+		this.responseCode = responseCode;
 	}
-	
-	
+
+	public String getTypeCard() {
+		return typeCard;
+	}
+
+	public void setTypeCard(String typeCard) {
+		this.typeCard = typeCard;
+	}
+
+	public String getTransStatus() {
+		return transStatus;
+	}
+
+	public void setTransStatus(String transStatus) {
+		this.transStatus = transStatus;
+	}
 	
 	
 }

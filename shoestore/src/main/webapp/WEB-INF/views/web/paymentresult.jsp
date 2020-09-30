@@ -48,7 +48,7 @@
                 </table>
                 <div>
                     <h2 class="text-center text-uppercase">
-                        Thank You
+                        Thank You For Using Our Service
                     </h2>
                     
                 </div>

@@ -52,7 +52,7 @@ public class PaymentRequestService implements IPaymentRequestService{
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	public String hashAllFields(Map fields) {
+	public String hashAllFields(Map fields,String secureSecret) {
         List fieldNames = new ArrayList(fields.keySet());
         Collections.sort(fieldNames);
         StringBuffer buf = new StringBuffer();
@@ -69,7 +69,7 @@ public class PaymentRequestService implements IPaymentRequestService{
         }
         byte[] mac = null;
         try {
-            byte[] b = decodeHexa(SECURE_SECRET.getBytes());
+            byte[] b = decodeHexa(secureSecret.getBytes());
             SecretKey key = new SecretKeySpec(b, "HMACSHA256");
             Mac m = Mac.getInstance("HMACSHA256");
             m.init(key);

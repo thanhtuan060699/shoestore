@@ -108,9 +108,9 @@
                             </div>
                             <div class="payment_item ">
                                 <div class="radion_btn">
-                                    <input type="radio" id="f-option7" name="selector" data-payment="onePay">
+                                    <input type="radio" id="f-option7" name="selector" data-payment="onePayWorld">
                                     <label for="f-option7">Pay By Master Card,Visa Card </label>
-                                    <img src="/template/web/img/product/card.jpg" alt="">
+                           
                                     <div class="check"></div>
                                 </div>
                              

@@ -15,6 +15,10 @@ document.addEventListener("DOMContentLoaded",function(){
             if(atm.checked){
               payment=atm.getAttribute('data-payment');
             }
+            var master=document.getElementById('f-option7');
+            if(master.checked){
+            	payment=master.getAttribute('data-payment');
+            }
             
             data["methodPayment"]=payment;
              if(check_box_rule.checked==false){

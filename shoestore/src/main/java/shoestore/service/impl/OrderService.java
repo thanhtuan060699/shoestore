@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import shoestore.convert.OrderConverter;
 import shoestore.convert.PaymentRequestConverter;
+import shoestore.convert.PaymentResponseConverter;
 import shoestore.dto.CartDTO;
 import shoestore.dto.OrderDTO;
 import shoestore.dto.PaymentRequestDTO;
+import shoestore.dto.PaymentResponseDTO;
 import shoestore.dto.UserDTO;
 import shoestore.entity.OrderDetailEntity;
 import shoestore.entity.OrderEntity;
@@ -43,6 +45,9 @@ public class OrderService implements IOrderService{
 	
 	@Autowired
 	PaymentRequestConverter paymentRequestConverter;
+	
+	@Autowired
+	PaymentResponseConverter paymentResponseConverter;
 	
 	@Override
 	public OrderDTO addNewOrder(UserDTO userDTO, OrderDTO orderDTO, List<CartDTO> cartDTOs) {
@@ -95,6 +100,15 @@ public class OrderService implements IOrderService{
 		OrderEntity orderEntity=orderConverter.convertToEntity(orderDTO);
 		PaymentRequestEntity paymentRequestEntity=paymentRequestConverter.convertToEntity(paymentRequestDTO);
 		orderEntity.setPaymentRequestEntity(paymentRequestEntity);
+		orderRepository.save(orderEntity);
+		
+	}
+
+	@Override
+	public void updatePaymentResponse(Long orderId, PaymentResponseDTO paymentResponseDTO) {
+		OrderEntity orderEntity=orderRepository.findOne(orderId);
+		PaymentResponseEntity paymentResponseEntity=paymentResponseConverter.convertToEntity(paymentResponseDTO);
+		orderEntity.setPaymentResponseEntity(paymentResponseEntity);
 		orderRepository.save(orderEntity);
 		
 	}
