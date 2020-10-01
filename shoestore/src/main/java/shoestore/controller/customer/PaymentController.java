@@ -53,6 +53,12 @@ public class PaymentController {
 	    } else {
 	        hashValidated = "INVALID HASH";
 	    }
+	    //correct
+	    if(hashValidated.equals("CORRECT")&&fields.get("vpc_TxnResponseCode").equals("0")) {
+	    	//save table order
+	    	
+	    }
+	    	
 	    PaymentResponseDTO paymentResponseDTO=new PaymentResponseDTO();
 	    String vpcTxnResponseCode=paymentRequestService.null2unknown((String) fields.get("vpc_TxnResponseCode"));
 	    String vpcTransactionNo=paymentRequestService.null2unknown((String) fields.get("vpc_TransactionNo"));

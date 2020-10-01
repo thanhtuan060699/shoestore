@@ -1,10 +1,10 @@
 <%@include file="/common/taglib.jsp"%>
-<%@ page language="java" contentType="text/html; charset=UFT-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UFTISO-8859-18"
+    pageEncoding="ISO-8859-1-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+	<meta charset="ISO-8859-1">
 	<title>Payment Result</title>
 </head>
 <body>

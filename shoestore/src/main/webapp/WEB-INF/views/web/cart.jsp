@@ -6,33 +6,22 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Cart</title>
 </head>
 <body>
 	 <!-- Start Banner Area -->
-    <section class="banner-area organic-breadcrumb">
-        <div class="container">
-            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-                <div class="col-first">
-                    <h1>Shopping Cart</h1>
-                    <nav class="d-flex align-items-center">
-                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                        <a href="category.html">Cart</a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </section>
+ 
     <!-- End Banner Area -->
 
     <!--================Cart Area =================-->
-    <section class="cart_area">
+    <section class="cart_area" style="padding-top: 250px">
     
    	
         <div class="container">
         <div class="alert-quantity">
         </div>
             <div class="cart_inner">
+            	<c:if test="${empty zeroProduct }">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -46,6 +35,7 @@
                                 <th scope="col">Delete</th>
                             </tr>
                         </thead>
+                        
                         <tbody class="add-delete">
                            <c:forEach var="item" items="${cart}">
                             <tr>
@@ -83,7 +73,7 @@
                                     <h5>${item.total} VND</h5>
                                 </td>
                                 <td>
-                                	 <h5 style="font-size: 20px;cursor: pointer;"><i class="fa fa-trash-o" aria-hidden="true" onclick="deleteCart(${item.id})"></i></h5>
+                                	 <h5 style="font-size: 20px;cursor: pointer;" class="delete-cart"><i class="fa fa-trash-o" aria-hidden="true" onclick="deleteCart(${item.id})"></i></h5>
                                 	 
                                 </td>
                             </tr>
@@ -103,7 +93,7 @@
                                     <div class="cupon_text d-flex align-items-center">
                                         <input type="text" placeholder="Coupon Code">
                                         <a class="primary-btn" href="#">Apply</a>
-                                        <a class="gray_btn" href="#">Close Coupon</a>
+                                       
                                     </div>
                                 </td>
                             </tr>
@@ -133,7 +123,7 @@
                                     <h5>Shipping</h5>
                                 </td>
                                 <td>
-                                    <div class="shipping_box">
+                                    <div class="shipping_box shipping_cart">
                                         <ul class="list">
                                             <li><a href="#">Flat Rate: $5.00</a></li>
                                             <li><a href="#">Free Shipping</a></li>
@@ -162,9 +152,17 @@
                                 </td>
                             </tr>
                         </tbody>
+                        
                     </table>
-                    <div class="zero-product"></div>
+                    
                 </div>
+                </c:if>
+                <c:if test="${not empty zeroProduct }">
+                	<div class="zero-product-cart" style="text-align: center;font-weight: 200;font-size: 30px">Not Have Any Products In Cart</div>
+                	<div class="continue-cart" style="text-align: center;margin-top: 10px"> <a class="primary-btn" href="/karma/listproduct?page=1&limit=9">Continue Shopping</a></div>
+                </c:if>
+              	    <div class="zero-product" style="text-align: center;font-weight: 200;font-size: 30px"></div>
+              	    <div class="continue-cart" style="text-align: center;margin-top: 10px"> <a class="primary-btn" href="/karma/listproduct?page=1&limit=9"></a></div>
             </div>
         </div>
     </section>

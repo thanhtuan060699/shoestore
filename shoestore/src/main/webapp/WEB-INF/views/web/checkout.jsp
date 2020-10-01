@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Check out</title>
 </head>
 <body>
 	 <!-- Start Banner Area -->

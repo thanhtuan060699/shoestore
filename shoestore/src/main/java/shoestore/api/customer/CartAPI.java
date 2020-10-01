@@ -181,8 +181,9 @@ public class CartAPI {
 		HashMap<String, Object> hashMap=new HashMap<String, Object>();
 		cartDTO.setQuantity(1);
 		cartDTO.setTotal(cartDTO.getPrice()*cartDTO.getQuantity());
+		List<CartDTO> carts=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
 		StatementDTO statementDTO=new StatementDTO(true, 200, "add cart successful");
-		if(SessionUtil.getInstance().getValue(request, "carts")==null) {
+		if(carts==null||carts.size()==0) {
 			List<CartDTO> cartDTOs=new ArrayList<CartDTO>();
 			cartDTOs.add(cartDTO);
 			cartDTO.setId(1);
@@ -219,8 +220,8 @@ public class CartAPI {
 	
 	@RequestMapping(value = "/api/cart/delete",method = RequestMethod.POST)
 	public @ResponseBody HashMap<String , Object> deleteCart(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
-		List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
 		HashMap<String, Object> hashMap=new HashMap<String, Object>();
+		List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
 		for(CartDTO cart:cartDTOs) {
 			if(cart.getId()==cartDTO.getId()) {
 				cartDTOs.remove(cart);
@@ -241,6 +242,7 @@ public class CartAPI {
 		hashMap.put("sumPrice", sumPrice);
 		hashMap.put("sumQuantity", sumQuantity);
 		SessionUtil.getInstance().putValue(request,"carts", cartDTOs);
+		SessionUtil.getInstance().putValue(request,"amounts",0 );
 		return hashMap;
 		
 	}

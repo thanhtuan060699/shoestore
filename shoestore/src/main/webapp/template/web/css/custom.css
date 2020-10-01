@@ -2,3 +2,9 @@
 .order_box .list li{
     line-height: 2.3;
 }
+.delete-cart :hover{
+    color:red;
+}
+.cart_inner .table tbody tr td .product_count .reduced{
+    bottom:-2px;
+}

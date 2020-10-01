@@ -146,7 +146,16 @@ function deleteCart(id){
         dataType: "json",
         contentType:"application/json",
         success: function (response) {
-          
+        		if(response.carts.length==0){
+                    var cartZero=document.getElementsByClassName('zero-product')[0];
+                    cartZero.outerHTML='<div class="zero-product" style="text-align: center;font-weight: 200;font-size: 30px">Not Have Any Products In Cart</div>';
+                    var cartDelete=document.getElementsByClassName('table-responsive')[0];
+                    cartDelete.innerHTML='';
+                    var numberCart=document.getElementsByClassName('numberCart')[0];
+                    numberCart.innerHTML='(0)';
+                    var continueCart=document.getElementsByClassName('continue-cart')[0];
+                    continueCart.outerHTML='<div class="continue-cart" style="text-align: center;margin-top: 10px"> <a class="primary-btn" href="/karma/listproduct?page=1&limit=9">Continue Shopping</a></div>';
+        		}else{
             	 console.log(response.carts[0]);
             	 for(var i=0;i<response.carts.length;i++){
                      var html='<tr>';
@@ -210,7 +219,7 @@ function deleteCart(id){
                cartDelete.innerHTML=html;  
                var numberCart=document.getElementsByClassName('numberCart')[0];
                numberCart.innerHTML='('+response.sumQuantity+')';
-    
+        		}
         }
         });
 }

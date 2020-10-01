@@ -19,6 +19,7 @@
                      authentication-failure-url="/login?incorrectAccount"/>
         <session-management invalid-session-url="/login?sessionTimeout"/>
         <logout delete-cookies="JSESSIONID"/>
+        <remember-me key="uniqueAndSecret" />
     </http>
     <authentication-manager >
         <authentication-provider user-service-ref="customUserDetailsService">
