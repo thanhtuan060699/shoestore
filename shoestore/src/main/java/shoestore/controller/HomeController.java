@@ -20,6 +20,7 @@ public class HomeController {
 	@RequestMapping(value = "/home",method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request) {
 		ModelAndView modelAndView=new ModelAndView("home");
+		modelAndView.addObject("homeActive",true);
 		modelAndView.addObject("amounts", SessionUtil.getInstance().getValue(request, "amounts"));
 		return modelAndView;
 	}
@@ -29,6 +30,7 @@ public class HomeController {
 		if(nonlogin!=null) {
 			modelAndView.addObject("checkoutlogin", "true");
 		}
+		modelAndView.addObject("loginActive", true);
 		modelAndView.addObject("amounts", SessionUtil.getInstance().getValue(request, "amounts"));
 		return modelAndView;
 	}

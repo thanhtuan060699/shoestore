@@ -1,4 +1,5 @@
 <%@include file="/common/taglib.jsp"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,7 +35,7 @@
 						<h3 class="name-detail-product" data-name="${product.name}">${product.name }</h3>
 						<h2 class="price-detail-product">VND</h2>
 						<ul class="list">
-							<li><a class="active" href="#"><span>Category</span> : Household</a></li>
+							<li><a class="active" href="#"><span>Brand</span> : ${product.brand}</a></li>
 							<li class="quantity-detail-product"><span>Availibility</span> : In Stock</li>
 						</ul>
 						<p>Mill Oil is an innovative oil filled radiator with the most modern technology. If you are looking for
@@ -57,8 +58,7 @@
 						</div>
 						<div class="card_area d-flex align-items-center">
 							<a class="primary-btn add-cart" >Add to Cart</a>
-							<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+							
 						</div>
 					</div>
 				</div>
@@ -409,7 +409,7 @@
 					<div class="row">
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r1.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r1.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -421,7 +421,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r2.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r2.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -433,7 +433,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r3.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r3.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -445,7 +445,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r5.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r5.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -457,7 +457,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r6.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r6.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -469,7 +469,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r7.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r7.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -481,7 +481,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r9.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r9.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -493,7 +493,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r10.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r10.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -505,7 +505,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r11.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r11.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -527,6 +527,50 @@
 			</div>
 		</div>
 	</section>
+	<div  class="save-contact" data-name="" data-size="" data-color="">
+	</div>
+	<div id="soldOutLoginModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+		  
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				 <h4 class="modal-title" style="text-align: left;">This product was sold out.Please fill out your contact. We will
+				  contact with you as soon as possible if we have this one</h4>
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				 
+				</div>
+				<div class="modal-body">
+				   <input type="text" id="contact-email" class="form-control"  placeholder="Email" style="margin-bottom: 20px">
+				   <input type="text" id="contact-phone" class="form-control"  placeholder="Phone Number" style="margin-bottom: 20px">
+				   <input type="text" id="contact-name" class="form-control"  placeholder="Full Name">
+				</div>
+				<div class="modal-footer" style="text-align: center;">
+				   <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnContact">Send</button>
+				   <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+				</div>
+			  </div>
+			</div>
+	</div>
+	<div id="soldOutNonLoginModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+		  
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				 <h4 class="modal-title" style="text-align: left;">This product was sold out.You can 
+				 fill out your contact to get new information about this one.Login to filling out</h4>
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				 
+				</div>
+		
+				<div class="modal-footer" style="text-align: center;">
+				  <a href="/login"><button class="btn btn-danger"  >Login</button></a>
+				  <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+				</div>
+			  </div>
+			</div>
+	</div>
 	<!-- End related-product Area -->
 	<script src="<c:url value='/template/web/js/jsmain/productdetail.js' />"></script>
 </body>

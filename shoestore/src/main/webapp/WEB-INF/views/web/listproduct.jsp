@@ -1,4 +1,5 @@
 <%@include file="/common/taglib.jsp"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -21,11 +22,9 @@
 						<div class="head">Brands</div>
 						<form action="#">
 							<ul>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label for="apple">Apple<span>(29)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="asus" name="brand"><label for="asus">Asus<span>(29)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="gionee" name="brand"><label for="gionee">Gionee<span>(19)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="micromax" name="brand"><label for="micromax">Micromax<span>(19)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="samsung" name="brand"><label for="samsung">Samsung<span>(19)</span></label></li>
+							<c:forEach items="${brands}" var="item">
+								<li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label for="apple">${item.name}<span>(29)</span></label></li>
+							</c:forEach>
 							</ul>
 						</form>
 					</div>
@@ -89,11 +88,12 @@
 						
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product">
-								<img class="img-fluid" src="/template/web/img/product/p1.jpg" alt="">
+								<img class="img-fluid" src="/usr/var/thumbnail/${item.image }" alt="" data-image="${item.image }">
 								<div class="product-details">
 									<h6>${item.name }</h6>
 									<div class="listproduct-price" data-price="${item.price }" data-name="${item.name }">
-										<h6>${item.price} VND</h6>
+										<h6><fmt:formatNumber value = "${item.price}" type = "currency" currencySymbol="$" currencyCode="VND" pattern="###,##0"/> VND</h6>
+										
 										<!-- <h6 class="l-through">$210.00</h6> -->
 									</div>
 									<div class="listproduct-color" data-color="${item.color }" data-quantity="${item.quantity}">
@@ -170,7 +170,7 @@
 					<div class="row">
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r1.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r1.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -182,7 +182,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r2.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r2.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -194,7 +194,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r3.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r3.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -206,7 +206,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r5.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r5.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -218,7 +218,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r6.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r6.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -230,7 +230,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r7.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r7.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -242,7 +242,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r9.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r9.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -254,7 +254,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r10.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r10.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -266,7 +266,7 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-6">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r11.jpg" alt=""></a>
+								<a href="#"><img src="/template/web/img/r11.jpg" alt=""></a>
 								<div class="desc">
 									<a href="#" class="title">Black lace Heels</a>
 									<div class="price">
@@ -288,6 +288,50 @@
 			</div>
 		</div>
 	</section>
+	<div  class="save-contact" data-name="" data-size="" data-color="">
+	</div>
+	<div id="soldOutLoginModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+		  
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				 <h4 class="modal-title" style="text-align: left;">This product was sold out.Please fill out your contact. We will
+				  contact with you as soon as possible if we have this one</h4>
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				 
+				</div>
+				<div class="modal-body">
+				   <input type="text" id="contact-email" class="form-control"  placeholder="Email" style="margin-bottom: 20px">
+				   <input type="text" id="contact-phone" class="form-control"  placeholder="Phone Number" style="margin-bottom: 20px">
+				   <input type="text" id="contact-name" class="form-control"  placeholder="Full Name">
+				</div>
+				<div class="modal-footer" style="text-align: center;">
+				   <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnContact">Send</button>
+				   <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+				</div>
+			  </div>
+			</div>
+	</div>
+	<div id="soldOutNonLoginModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+		  
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				 <h4 class="modal-title" style="text-align: left;">This product was sold out.You can 
+				 fill out your contact to get new information about this one.Login to filling out</h4>
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				 
+				</div>
+		
+				<div class="modal-footer" style="text-align: center;">
+				  <a href="/login"><button class="btn btn-danger"  >Login</button></a>
+				  <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+				</div>
+			  </div>
+			</div>
+	</div>
 	<!-- End related-product Area -->
 	<script src="<c:url value='/template/web/js/vendor/jquery-2.2.4.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/jsmain/listproduct.js' />"></script>

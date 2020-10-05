@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import shoestore.dto.ProductAttributeDTO;
 import shoestore.dto.ProductDTO;
+import shoestore.service.impl.ImageService;
 import shoestore.service.impl.ProductAttributeService;
 import shoestore.service.impl.ProductService;
 import shoestore.util.SessionUtil;
@@ -25,6 +26,9 @@ public class DetailProductController {
 	@Autowired
 	ProductAttributeService productAttributeService;
 	
+	@Autowired
+	ImageService imageService;
+	
 	@RequestMapping(value = "/karma/detailproduct",method = RequestMethod.GET)
 	public ModelAndView showDetailProduct(@RequestParam Long id,HttpServletRequest request) {
 		ModelAndView modelAndView=new ModelAndView("web/detailproduct");
@@ -33,6 +37,7 @@ public class DetailProductController {
 		modelAndView.addObject("amounts", SessionUtil.getInstance().getValue(request, "amounts"));
 		modelAndView.addObject("sizes", productAttributeDTOs);
 		modelAndView.addObject("product", productDTO);
+		modelAndView.addObject("productActive",true);
 		return modelAndView;
 	}
 }

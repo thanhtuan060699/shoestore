@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import shoestore.constant.SystemConstant;
 import shoestore.convert.ProductConverter;
 import shoestore.dto.ProductDTO;
+import shoestore.entity.ImageEntity;
 import shoestore.entity.ProductEntity;
 import shoestore.repository.ProductRepository;
 import shoestore.service.IProductService;
@@ -32,14 +34,26 @@ public class ProductService implements IProductService{
 	public List<ProductDTO> findAll(Pageable pageable) {
 	
 		List<ProductEntity> productEntities=(List<ProductEntity>) productRepository.findAll(pageable).getContent();
-		return  productEntities.stream().map(item -> productConverter.convertToDTO(item)).collect(Collectors.toList());
+		List<ProductDTO> productDTOs=new ArrayList<ProductDTO>();
+		for(ProductEntity productEntity:productEntities) {
+			ProductDTO productDTO=productConverter.convertToDTO(productEntity);
+			for(ImageEntity imageEntity:productEntity.getImageEntities()) {
+				if(imageEntity.getType().equals(SystemConstant.IMAGE_THUMBNAIL)) {
+					productDTO.setImage(imageEntity.getImage());
+				}
+			}
+			productDTOs.add(productDTO);
+		}
+		return productDTOs;
 	}
 
 
 	@Override
 	public ProductDTO findById(Long id) {
 		ProductEntity productEntity=productRepository.findOne(id);
-		return productConverter.convertToDTO(productEntity);
+		ProductDTO productDTO=productConverter.convertToDTO(productEntity);
+		productDTO.setBrand(productEntity.getBrandEntity().getName());
+		return productDTO;
 	}
 
 }

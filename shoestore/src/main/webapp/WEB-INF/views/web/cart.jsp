@@ -1,6 +1,8 @@
 <%@include file="/common/taglib.jsp"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
     
 <!DOCTYPE html>
 <html>
@@ -42,7 +44,7 @@
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-                                            <img src="/template/web/img/cart.jpg" alt="">
+                                            <img src="/usr/var/thumbnail/${item.thumbnailImage }" alt="" style="width: 152px;height: 100px">
                                         </div>
                                         <div class="media-body cart-name" data-name="${item.name }" data-id="${item.id }">
                                             <p>${item.name }</p>
@@ -67,10 +69,10 @@
                                     </div>
                                 </td>
                                 <td class="cart-price" data-price="${item.price}">
-                                    <h5>${item.price} VND</h5>
+                                    <h5><fmt:formatNumber value = "${item.price}" type = "currency" currencySymbol="$" currencyCode="VND" pattern="###,##0"/>VND</h5>
                                 </td>
                                 <td class="cart-total" data-total="${item.total}">
-                                    <h5>${item.total} VND</h5>
+                                    <h5><fmt:formatNumber value = "${item.total}" type = "currency" currencySymbol="$" currencyCode="VND" pattern="###,##0"/> VND</h5>
                                 </td>
                                 <td>
                                 	 <h5 style="font-size: 20px;cursor: pointer;" class="delete-cart"><i class="fa fa-trash-o" aria-hidden="true" onclick="deleteCart(${item.id})"></i></h5>
@@ -79,7 +81,7 @@
                             </tr>
                             
                             </c:forEach>
-                            <tr class="bottom_button">
+                            <tr class="bottom_button" >
                                 <td>
                                     <a class="gray_btn" href="#">Update Cart</a>
                                 </td>
@@ -90,7 +92,16 @@
 
                                 </td>
                                 <td>
-                                    <div class="cupon_text d-flex align-items-center">
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="cupon_text d-flex align-items-center couponstyle">
                                         <input type="text" placeholder="Coupon Code">
                                         <a class="primary-btn" href="#">Apply</a>
                                        
@@ -98,21 +109,40 @@
                                 </td>
                             </tr>
                             <tr>
+                              
                                 <td>
 
                                 </td>
                                 <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                             	  <td>
 
                                 </td>
                                 <td>
                                     <h5>Subtotal</h5>
                                 </td>
                                 <td>
-                                    <h5 class="sub-total">${subTotal } VND</h5>
+                                    <h5 class="sub-total"><fmt:formatNumber value = "${subTotal}" type = "currency" currencySymbol="$" currencyCode="VND" pattern="###,##0"/> VND</h5>
                                 </td>
                             </tr>
                             
                             <tr class="shipping_area">
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
                                 <td>
 
                                 </td>
@@ -144,9 +174,18 @@
                                 <td>
 
                                 </td>
+                                 <td>
+
+                                </td>
+                                 <td>
+
+                                </td>
+                                 <td>
+
+                                </td>
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
-                                        <a class="gray_btn" href="#">Continue Shopping</a>
+                                        <a class="gray_btn" href="/karma/listproduct?page=1&limit=9">Continue Shopping</a>
                                         <a class="primary-btn" href="/karma/checkout">Proceed to checkout</a>
                                     </div>
                                 </td>

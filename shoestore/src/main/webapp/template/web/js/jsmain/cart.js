@@ -1,5 +1,22 @@
 //increase
-
+ function formatCurency(number) {
+    	var array = [],
+    	result = "",
+    	count = 0;
+    	var number = number.toString();
+    	if(number.length <3){return}
+    	for(var i = number.length-1; i>=0; i--){
+    	count+=1;
+    	array.push(number[i]);
+    	if(count==3 && i>=1){ array.push(".");
+    	count = 0;
+    	}
+    	}
+    	for(var i = array.length -1; i>=0; i--){
+    	result += array[i];
+    	}
+    	return result;
+  }
  function increaseCart(id){ 
     var cartName=document.getElementsByClassName('cart-name');
      for(var i=0;i<cartName.length;i++){
@@ -23,19 +40,21 @@
                 contentType:"application/json",
                 success: function (response) {
                    
-                    if(response.quantity==maxQuantity){
+                    if(response.cartChange.quantity==maxQuantity){
                     var alert=document.getElementsByClassName('alert-quantity')[0];
-                    alert.innerHTML='<div class="alert alert-danger">This product just have '+maxQuantity+' in the stonk</div>';
+                    console.log(alert);
+                    alert.outerHTML='<div class="alert-quantity" ><div class="alert alert-danger">This product just have '+maxQuantity+' in the stonk</div></div>';
                     var totalChange=document.getElementsByClassName('cart-total')[i];
-                    totalChange.innerHTML='<h5>'+maxQuantity*price+' VND</h5>';
+                    totalChange.innerHTML='<h5>'+formatCurency(maxQuantity*price)+' VND</h5>';
                     }else{
                         var totalChange=document.getElementsByClassName('cart-total')[i];
-                        totalChange.innerHTML='<h5>'+response.cartChange.total+' VND</h5>';
+                        totalChange.innerHTML='<h5>'+formatCurency(response.cartChange.total)+' VND</h5>';
                     }
                         var quanntityChange=document.getElementsByClassName('qty')[i];
                         quanntityChange.outerHTML=' <input type="text" name="qty" id="sst" maxlength="12" value="'+response.cartChange.quantity+'" title="Quantity:" class="input-text qty qtyChange">';
                         var subTotal=document.getElementsByClassName('sub-total')[0];
-                        subTotal.innerHTML=response.subTotal+' VND';
+                        subTotal.innerHTML=formatCurency(response.subTotal)+' VND';                       
+                        console.log(formatCurency(response.subTotal)+' VND');
                         var numberCart=document.getElementsByClassName('numberCart')[0];
                         numberCart.innerHTML='('+response.subQuantity+')';
                     }
@@ -73,13 +92,13 @@ function  reduceCart(id) {
                 contentType:"application/json",
                 success: function (response) {
                     var totalChange=document.getElementsByClassName('cart-total')[i];
-                    totalChange.innerHTML='<h5>'+response.cartChange.total+' VND</h5>';
+                    totalChange.innerHTML='<h5>'+formatCurency(response.cartChange.total)+' VND</h5>';
                     var quanntityChange=document.getElementsByClassName('qty')[i];
                     quanntityChange.outerHTML=' <input type="text" name="qty" id="sst" maxlength="12" value="'+response.cartChange.quantity+'" title="Quantity:" class="input-text qty qtyChange">';
                     var alert=document.getElementsByClassName('alert-quantity')[0];
                     alert.innerHTML='';
                     var subTotal=document.getElementsByClassName('sub-total')[0];
-                    subTotal.innerHTML=response.subTotal+' VND';
+                    subTotal.innerHTML=formatCurency(response.subTotal)+' VND';
                     var numberCart=document.getElementsByClassName('numberCart')[0];
                     numberCart.innerHTML='('+response.subQuantity+')';
                 }
@@ -114,10 +133,10 @@ function changeQuantityCart(id){
                 contentType:"application/json",
                 success: function (response) {
                     var totalChange=document.getElementsByClassName('cart-total')[i];
-                    totalChange.innerHTML='<h5>'+response.cartChange.total+' VND</h5>';
+                    totalChange.innerHTML='<h5>'+formatCurency(response.cartChange.total)+' VND</h5>';
                     var quanntityChange=document.getElementsByClassName('qty')[i];
                     quanntityChange.outerHTML=' <input type="text" name="qty" id="sst" maxlength="12" value="'+response.cartChange.quantity+'" title="Quantity:" class="input-text qty qtyChange" onchange="changeQuantityCart(${item.id})">';
-                    if(response.quantity>=maxQuantity){
+                    if(response.cartChange.quantity>=maxQuantity){
                         var alert=document.getElementsByClassName('alert-quantity')[0];
                         alert.innerHTML='<div class="alert alert-danger">This product just have '+maxQuantity+' in the stonk</div>';
                     }
@@ -126,9 +145,9 @@ function changeQuantityCart(id){
                     	alert.innerHTML='';
                     }
                     var subTotal=document.getElementsByClassName('sub-total')[0];
-                    subTotal.innerHTML=response.subTotal+' VND';
+                    subTotal.innerHTML=formatCurency(response.subTotal)+' VND';
                     var numberCart=document.getElementsByClassName('numberCart')[0];
-                    numberCart.innerHTML=response.subQuantity+'';
+                    numberCart.innerHTML='('+response.subQuantity+')';
                 }
                 });
                     break;
@@ -187,10 +206,10 @@ function deleteCart(id){
                      	html+='</div>';
                      	html+='</td>';
                      	html+='<td class="cart-price" data-price="'+response.carts[i].price+'">';
-                     	html+='<h5>'+response.carts[i].price+' VND</h5>';
+                     	html+='<h5>'+formatCurency(response.carts[i].price)+' VND</h5>';
                      	html+=' </td>';
                      	html+='<td class="cart-total" data-total="'+response.carts[i].total+'">';
-                     	html+='<h5>'+response.carts[i].total+' VND</h5>';
+                     	html+='<h5>'+formatCurency(response.carts[i].total)+' VND</h5>';
                      	html+=' </td>';
                      	html+='<td>';
                      	html+=' <h5 style="font-size: 20px;cursor: pointer;"><i class="fa fa-trash-o" aria-hidden="true" onclick="deleteCart('+response.carts[i].id+')"></i></h5>';
@@ -199,17 +218,17 @@ function deleteCart(id){
                         html+=' </tr>';
                         html+=' <tr class="bottom_button"> ';
                         html+='<td><a class="gray_btn" href="#">Update Cart</a></td>';
-                        html+='<td> </td> <td></td>';
+                        html+='<td> </td> <td></td><td></td><td></td><td></td>';
                         html+=' <td><div class="cupon_text d-flex align-items-center"><input type="text" placeholder="Coupon Code">';
-                        html+='<a class="primary-btn" href="#">Apply</a><a class="gray_btn" href="#">Close Coupon</a> </div></td>';
+                        html+='<a class="primary-btn" href="#">Apply</a> </div></td>';
                         html+='</tr>';
-                        html+='<tr><td></td><td></td><td><h5>Subtotal</h5></td>';
-                        html+='<td><h5 class="sub-total">'+response.sumPrice+' VND</h5></td></tr>';
-                        html+='<tr class="shipping_area"><td></td><td></td><td><h5>Shipping</h5></td>';
+                        html+='<tr><td></td><td></td><td></td><td></td><td></td><td><h5>Subtotal</h5></td>';
+                        html+='<td><h5 class="sub-total">'+formatCurency(response.sumPrice)+' VND</h5></td></tr>';
+                        html+='<tr class="shipping_area"><td></td><td></td><td></td><td></td><td></td><td><h5>Shipping</h5></td>';
                         html+='<td><div class="shipping_box"><ul class="list"><li><a href="#">Flat Rate: $5.00</a></li>';
                         html+='<li><a href="#">Free Shipping</a></li><li><a href="#">Flat Rate: $10.00</a></li>';
                         html+='<li class="active"><a href="#">Local Delivery: $2.00</a></li></ul> </div></td></tr>';
-                        html+='<tr class="out_button_area"><td></td><td></td><td></td><td>';
+                        html+='<tr class="out_button_area"><td></td><td></td><td></td><td></td><td></td><td></td><td>';
                         html+='<div class="checkout_btn_inner d-flex align-items-center">';
                         html+='<a class="gray_btn" href="#">Continue Shopping</a>';
                         html+='<a class="primary-btn" href="/karma/checkout">Proceed to checkout</a>';

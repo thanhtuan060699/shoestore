@@ -49,6 +49,9 @@ public class UserEntity {
 	private List<UserRoleEntity> userRoleEntities=new ArrayList<UserRoleEntity>();
 	
 	@OneToMany(mappedBy = "userEntity")
+	private List<ContactEntity> contactEntities=new ArrayList<ContactEntity>();
+	
+	@OneToMany(mappedBy = "userEntity")
 	private List<OrderEntity> orderEntities =new ArrayList<OrderEntity>();
 	
 
@@ -154,6 +157,14 @@ public class UserEntity {
 
 	public void setOrderEntities(List<OrderEntity> orderEntities) {
 		this.orderEntities = orderEntities;
+	}
+
+	public List<ContactEntity> getContactEntities() {
+		return contactEntities;
+	}
+
+	public void setContactEntities(List<ContactEntity> contactEntities) {
+		this.contactEntities = contactEntities;
 	}
 
 	

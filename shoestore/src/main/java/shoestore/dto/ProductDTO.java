@@ -20,6 +20,10 @@ public class ProductDTO {
 	private Integer quantity;
 	
 	private Long productAttributeId;
+	
+	private String brand;
+	
+	private String image;
 
 	public Long getId() {
 		return id;
@@ -99,6 +103,22 @@ public class ProductDTO {
 
 	public void setProductAttributeId(Long productAttributeId) {
 		this.productAttributeId = productAttributeId;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

@@ -22,8 +22,18 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav ml-auto">
-							<li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
-							<li class="nav-item active"><a class="nav-link" href="/karma/listproduct?page=1&limit=9">Shop</a></li>
+							<c:if test="${not empty homeActive }">
+								<li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
+							</c:if>
+							<c:if test="${empty homeActive }">
+								<li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
+							</c:if>
+							<c:if test="${not empty productActive }">
+								<li class="nav-item active"><a class="nav-link" href="/karma/listproduct?page=1&limit=9">Shop</a></li>
+							</c:if>
+							<c:if test="${ empty productActive }">
+								<li class="nav-item "><a class="nav-link" href="/karma/listproduct?page=1&limit=9">Shop</a></li>
+							</c:if>
 							
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -46,8 +56,15 @@
 							</c:if>
 							
 							<c:if test="${empty pageContext.request.userPrincipal.name}">
-							<li class="nav-item"><a class="nav-link" href="/login">Login
-							<i class="fa fa-sign-in" aria-hidden="true"></i></a>
+							<c:if test="${not empty loginActive }">
+								<li class="nav-item active"><a class="nav-link" href="/login">Login
+								<i class="fa fa-sign-in" aria-hidden="true"></i></a>
+							</c:if>
+							<c:if test="${empty loginActive }">
+								<li class="nav-item"><a class="nav-link" href="/login">Login
+								<i class="fa fa-sign-in" aria-hidden="true"></i></a>
+							</c:if>
+							
 							</li>
 							</c:if>
 							

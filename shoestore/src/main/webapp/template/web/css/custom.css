@@ -8,3 +8,27 @@
 .cart_inner .table tbody tr td .product_count .reduced{
     bottom:-2px;
 }
+.sidebar-filter{
+    margin-top: 0px;
+}
+.pagination a{
+    width: 70px;
+    line-height: 14px;
+}
+.cart_inner .table tbody tr.bottom_button td .cupon_text{
+    margin-left:-210px;
+}
+.sub-total {
+    width:110px;
+    
+}
+.cart_inner .table tbody tr.out_button_area .checkout_btn_inner{
+    margin-left:-668px;
+}
+.product_count .reduced{
+    bottom: -3px;
+}
+.filter-bar{
+    background:white;
+    box-shadow: 5px 10px 20px #828bb3;
+}

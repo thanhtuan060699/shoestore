@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,30 +21,63 @@ import shoestore.util.SessionUtil;
 public class CartAPI {
 	
 	@RequestMapping(value = "/api/cart/add",method = RequestMethod.POST)
-	public @ResponseBody Integer addCart(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
-		cartDTO.setTotal(cartDTO.getPrice()*cartDTO.getQuantity());
-		if(SessionUtil.getInstance().getValue(request, "carts")==null) {
-			List<CartDTO> cartDTOs=new ArrayList<CartDTO>();
-			cartDTOs.add(cartDTO);
-			cartDTO.setId(1);
-			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
-			SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
-			
-		}else {
-			List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
-			for(CartDTO cart: cartDTOs) {
-				if(cart.getProductAttributeId()==cartDTO.getProductAttributeId()) {
-					return 0;
+	public @ResponseBody HashMap<String,Object> addCart(@RequestBody CartDTO cartDTO,HttpServletRequest request) {
+		HashMap<String, Object> hashMap=new HashMap<String, Object>();
+		//check max quantity zero
+		if(cartDTO.getMaxQuantity()==0) {
+			Cookie[] cookies=request.getCookies();
+			String result=null;
+			for(Cookie cookie:cookies) {
+				if(cookie.getName().equals("TOKEN")) {
+					result=cookie.getValue();
 				}
 			}
-			Integer id=cartDTOs.get(cartDTOs.size()-1).getId()+1;
-	 		cartDTO.setId(id);
-	 		cartDTOs.add(cartDTO);
-	 		SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
-	 		SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
+			//check non login
+			if(result==null) {
+				StatementDTO statement=new StatementDTO(true, 200, "sold out and non login");
+				hashMap.put("statement", statement);
+			}
+			//check already login
+			else {
+				StatementDTO statement=new StatementDTO(true, 200, "sold out and login");
+				hashMap.put("statement", statement);
+			}
+		}else {
+			cartDTO.setTotal(cartDTO.getPrice()*cartDTO.getQuantity());
+			List<CartDTO> carts=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
+			if(carts==null||carts.size()==0) {
+				List<CartDTO> cartDTOs=new ArrayList<CartDTO>();
+				cartDTOs.add(cartDTO);
+				cartDTO.setId(1);
+				SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
+				SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
+				StatementDTO statement=new StatementDTO(true, 200, "success");
+				hashMap.put("statement", statement);
+				
+			}else {
+				List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
+				int index=0;
+				for(CartDTO cart: cartDTOs) {
+					if(cart.getProductAttributeId()==cartDTO.getProductAttributeId()) {
+						StatementDTO statement=new StatementDTO(true, 200, "product existed");
+						hashMap.put("statement", statement);
+						index++;
+					}
+				}
+				if(index==0) {
+					Integer id=cartDTOs.get(cartDTOs.size()-1).getId()+1;
+			 		cartDTO.setId(id);
+			 		cartDTOs.add(cartDTO);
+			 		StatementDTO statement=new StatementDTO(true, 200, "success");
+					hashMap.put("statement", statement);
+			 		SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
+			 		SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
+				}
 			
+			}
 		}
-		return (Integer) SessionUtil.getInstance().getValue(request, "amounts");
+		hashMap.put("amount", SessionUtil.getInstance().getValue(request, "amounts"));
+		return hashMap;
 	}
 	private Integer getSumTotalQuantity(List<CartDTO> cartDTOs) {
 		Integer sumTotal=0;
@@ -57,6 +91,7 @@ public class CartAPI {
 		if(cartDTO.getQuantity()<cartDTO.getMaxQuantity()) {
 			cartDTO.setQuantity(cartDTO.getQuantity()+1);
 		}
+		
 		return cartDTO;
 	}
 	
@@ -100,6 +135,10 @@ public class CartAPI {
 			hashMap.put("cartChange", cartDTO);
 			hashMap.put("subTotal", subTotal);
 			hashMap.put("subQuantity", subQuantity);
+			//increase amount
+			Integer amount=(Integer) SessionUtil.getInstance().getValue(request, "amounts");
+			amount++;
+			SessionUtil.getInstance().putValue(request, "amounts", amount);
 		}else {
 			List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
 			Long subTotal=sumTotalPrice(cartDTOs);
@@ -129,7 +168,9 @@ public class CartAPI {
 			cartDTO.setQuantity(cartDTO.getQuantity()-1);
 			Long total=(Long)(cartDTO.getQuantity()*cartDTO.getPrice());
 			cartDTO.setTotal(total);
-			
+			Integer amount=(Integer) SessionUtil.getInstance().getValue(request, "amounts");
+			amount--;
+			SessionUtil.getInstance().putValue(request, "amounts", amount);
 			
 		}else {
 			cartDTO.setTotal(cartDTO.getPrice());
@@ -173,6 +214,7 @@ public class CartAPI {
 		hashMap.put("subTotal", subTotal);
 		SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
 		Integer subQuantity=sumQuantity(cartDTOs);
+		SessionUtil.getInstance().putValue(request, "amounts", subQuantity);
 		hashMap.put("subQuantity", subQuantity);
 		return hashMap;
 	}
@@ -183,36 +225,61 @@ public class CartAPI {
 		cartDTO.setTotal(cartDTO.getPrice()*cartDTO.getQuantity());
 		List<CartDTO> carts=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
 		StatementDTO statementDTO=new StatementDTO(true, 200, "add cart successful");
-		if(carts==null||carts.size()==0) {
-			List<CartDTO> cartDTOs=new ArrayList<CartDTO>();
-			cartDTOs.add(cartDTO);
-			cartDTO.setId(1);
-			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
-			SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
-			
-		}else {
-			List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
-			for(CartDTO cart: cartDTOs) {
-				if(cart.getProductAttributeId()==cartDTO.getProductAttributeId()) {
-					if(cart.getQuantity()<cart.getMaxQuantity()) {
-						cart.setQuantity(cart.getQuantity()+1);
-					}
-					SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
-		 			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
-		 			StatementDTO statement=new StatementDTO(true, 200, "product existed");
-		 			hashMap.put("amounts", getSumTotalQuantity(cartDTOs));
-		 			hashMap.put("statement", statement);
-		 			return hashMap;
+		//check quantity 0
+		if(cartDTO.getMaxQuantity()==0) {
+			Cookie[] cookies=request.getCookies();
+			String result=null;
+			for(Cookie cookie:cookies) {
+				if(cookie.getName().equals("TOKEN")) {
+					result=cookie.getValue();
 				}
-				
 			}
- 			Integer id=cartDTOs.get(cartDTOs.size()-1).getId()+1;
- 			cartDTO.setId(id);
- 			cartDTOs.add(cartDTO);
- 			SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
- 			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
+			//check non login
+			if(result==null) {
+				StatementDTO statement=new StatementDTO(true, 200, "sold out and non login");
+				hashMap.put("statement", statement);
+			}
+			//check already login
+			else {
+				StatementDTO statement=new StatementDTO(true, 200, "sold out and login");
+				hashMap.put("statement", statement);
+			}
+		}else {
+			if(carts==null||carts.size()==0) {
+				List<CartDTO> cartDTOs=new ArrayList<CartDTO>();
+				cartDTOs.add(cartDTO);
+				cartDTO.setId(1);
+				SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
+				SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
+				StatementDTO statement=new StatementDTO(true, 200, "success");
+				hashMap.put("statement", statement);
+			}else {
+				List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
+				for(CartDTO cart: cartDTOs) {
+					if(cart.getProductAttributeId()==cartDTO.getProductAttributeId()) {
+						if(cart.getQuantity()<cart.getMaxQuantity()) {
+							cart.setQuantity(cart.getQuantity()+1);
+						}
+						cart.setTotal(cart.getQuantity()*cart.getPrice());
+						SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
+			 			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
+			 			StatementDTO statement=new StatementDTO(true, 200, "product existed");
+			 			hashMap.put("amounts", getSumTotalQuantity(cartDTOs));
+			 			hashMap.put("statement", statement);
+			 			return hashMap;
+					}
+					
+				}
+	 			Integer id=cartDTOs.get(cartDTOs.size()-1).getId()+1;
+	 			cartDTO.setId(id);
+	 			cartDTOs.add(cartDTO);
+	 			SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));
+	 			SessionUtil.getInstance().putValue(request, "carts", cartDTOs);
+	 			StatementDTO statement=new StatementDTO(true, 200, "success");
+				hashMap.put("statement", statement);
+			}
 		}
-		hashMap.put("statement",statementDTO);
+		
 		hashMap.put("amounts", (Integer) SessionUtil.getInstance().getValue(request, "amounts"));
 		return hashMap;
 
@@ -242,7 +309,7 @@ public class CartAPI {
 		hashMap.put("sumPrice", sumPrice);
 		hashMap.put("sumQuantity", sumQuantity);
 		SessionUtil.getInstance().putValue(request,"carts", cartDTOs);
-		SessionUtil.getInstance().putValue(request,"amounts",0 );
+		SessionUtil.getInstance().putValue(request,"amounts",sumQuantity );
 		return hashMap;
 		
 	}

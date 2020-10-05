@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import shoestore.dto.BrandDTO;
 import shoestore.dto.ProductAttributeDTO;
 import shoestore.dto.ProductDTO;
+import shoestore.service.impl.BrandService;
 import shoestore.service.impl.ProductAttributeService;
 import shoestore.service.impl.ProductService;
 
@@ -24,6 +26,9 @@ public class ProductController {
 	@Autowired
 	ProductAttributeService productAttributeService;
 	
+	@Autowired
+	BrandService brandService;
+	
 	@RequestMapping(value = "/karma/listproduct",method = RequestMethod.GET)
 	public ModelAndView listProduct(@RequestParam("page") int page, 
 			 @RequestParam("limit") int limit) {
@@ -31,7 +36,7 @@ public class ProductController {
 		int totalPage=(int) Math.ceil((double)totalItem/limit);
 		ModelAndView modelAndView=new ModelAndView("web/listproduct");
 		modelAndView.addObject("totalPage", totalPage);
-		modelAndView.addObject("page", page);
+ 		modelAndView.addObject("page", page);
 		Pageable pageable=new PageRequest(page-1, limit);
 		List<ProductDTO> productDTOs=productService.findAll(pageable);
 		List<ProductAttributeDTO> productAttributeDTOs=productAttributeService.findSampleOfProduct(productDTOs);
@@ -44,6 +49,9 @@ public class ProductController {
 			productDTO.setProductAttributeId(productAttributeDTOs.get(i).getId());
 			i++;
 		}
+		List<BrandDTO> brandDTOs=brandService.listBrand();
+		modelAndView.addObject("productActive",true);
+		modelAndView.addObject("brands", brandDTOs);
 		modelAndView.addObject("listProducts", productDTOs);
 		return modelAndView;
 	}

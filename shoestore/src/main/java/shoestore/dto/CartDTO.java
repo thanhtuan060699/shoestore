@@ -20,6 +20,8 @@ public class CartDTO {
 	private Integer maxQuantity;
 	
 	private Long productAttributeId;
+	
+	private String thumbnailImage;
 
 	public int getId() {
 		return id;
@@ -99,6 +101,14 @@ public class CartDTO {
 
 	public void setProductAttributeId(Long productAttributeId) {
 		this.productAttributeId = productAttributeId;
+	}
+
+	public String getThumbnailImage() {
+		return thumbnailImage;
+	}
+
+	public void setThumbnailImage(String thumbnailImage) {
+		this.thumbnailImage = thumbnailImage;
 	}
 
 	

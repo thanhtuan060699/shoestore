@@ -27,10 +27,6 @@
     <!--================Checkout Area =================-->
     <section class="checkout_area section_gap">
         <div class="container">
-            <div class="cupon_area">
-                <input type="text" placeholder="Enter coupon code">
-                <a class="tp_btn" href="#">Apply Coupon</a>
-            </div>
             <div class="billing_details">
                 <div class="row">
                     <div class="col-lg-8">

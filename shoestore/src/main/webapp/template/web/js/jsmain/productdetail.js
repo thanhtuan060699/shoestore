@@ -5,6 +5,24 @@ function getUrlVars() {
     });
     return vars;
 }
+function formatCurency(number) {
+	var array = [],
+	result = "",
+	count = 0;
+	var number = number.toString();
+	if(number.length <3){return}
+	for(var i = number.length-1; i>=0; i--){
+	count+=1;
+	array.push(number[i]);
+	if(count==3 && i>=1){ array.push(".");
+	count = 0;
+	}
+	}
+	for(var i = array.length -1; i>=0; i--){
+	result += array[i];
+	}
+	return result;
+}
 document.addEventListener("DOMContentLoaded",function(){
 
     var sneakerSize=document.getElementsByClassName('sneaker-size');
@@ -32,7 +50,7 @@ document.addEventListener("DOMContentLoaded",function(){
                     quantity.outerHTML='<li class="quantity-detail-product" data-quantity="'+response.quantity+'"><span>Availibility</span> : <b1>only '+response.quantity+ ' left in stock</b1></li>';
                     var price=document.getElementsByClassName('price-detail-product')[0];
                    
-                    price.outerHTML='<h2 class="price-detail-product" data-price="'+response.price + '"> '+response.price + ' VND </h2>';
+                    price.outerHTML='<h2 class="price-detail-product" data-price="'+response.price + '"> '+formatCurency(response.price) + ' VND </h2>';
                 }
             });
         }
@@ -80,12 +98,44 @@ document.addEventListener("DOMContentLoaded",function(){
                 dataType: "json",
                 contentType:"application/json",
                 success: function (response) {
-                	if(response==0){
-                		alert('You product have already existed');
-                	}else{
-                		alert('Add in cart successful')
+                	if(response.statement.message==='sold out and non login'){
+                  	  $('#soldOutNonLoginModal').modal();
+                    }else if(response.statement.message==='sold out and login'){
+                  	  $('#soldOutLoginModal').modal();
+                     }else if(response.statement.message==='success'){
+                    	 $(function() {
+                 		    index=0;
+                 		    index=100+window.pageYOffset;
+                 		    setTimeout(function() {
+                 		        $.bootstrapGrowl("Add into the cart successful", {
+                 		            type: 'success',
+                 		            align: 'right',
+                 		            width: '250',
+                 		            delay: 1000,
+                 		            offset: {from: 'top', amount: index},
+                 		       
+                 		        });
+                 		    }, 0);
+                 		  
+                 		});
+                         var numberCart=document.getElementsByClassName('numberCart')[0];
+                         numberCart.outerHTML='<span class="numberCart">('+response.amount+')</span>';
+                     }else if(response.statement.message==='product existed'){
+                    	 Swal.fire({
+                    		  title: 'Your product existed in the cart?',
+                    		  text: "You want to go to the cart",
+                    		  icon: 'warning',
+                    		  showCancelButton: true,
+                    		  confirmButtonColor: '#3085d6',
+                    		  cancelButtonColor: '#d33',
+                    		  confirmButtonText: 'Go to the cart'
+                    		}).then((result) => {
+                    		  if (result.isConfirmed) {
+                    			  window.location.href="/karma/cart";
+                    		  }
+                    		})
                         var numberCart=document.getElementsByClassName('numberCart')[0];
-                        numberCart.outerHTML='<span class="numberCart">('+response+')</span>';
+                        numberCart.outerHTML='<span class="numberCart">('+response.amount+')</span>';
                 	}
                     
                 }
@@ -201,3 +251,58 @@ function changeQuantity(){
     }
 	
 }
+
+//contact
+document.addEventListener("DOMContentLoaded",function(){
+    var btnContact=document.getElementById('btnContact');
+    var data={};
+    btnContact.onclick=function(){
+      var email=document.getElementById('contact-email').value;
+      var phone=document.getElementById('contact-phone').value;
+      var name=document.getElementById('contact-name').value;
+      var shoeName=document.getElementsByClassName('name-detail-product')[0].getAttribute('data-name');
+      var sneakerSize=document.getElementsByClassName('sneaker-size');
+      var data={};
+      var maxQuantity=document.getElementsByClassName('quantity-detail-product')[0].getAttribute('data-quantity');
+      data['maxQuantity']=maxQuantity;
+      data['name']=name;
+      for(var i=0;i<sneakerSize.length;i++){
+          if( sneakerSize[i].getAttribute('class').includes('change')==true){
+              var dataSize=sneakerSize[i].getAttribute('data-size');
+              var dataColor=sneakerSize[i].getAttribute('data-color');
+              var productAttributeId=sneakerSize[i].getAttribute('data-atr');
+              data['size']=dataSize;
+              data['color']=dataColor;
+        
+          }
+      }
+      data['email']=email;
+      data['phoneNumber']=phone;
+      data['name']=name;
+      data['shoeName']=shoeName;
+  
+      $.ajax({
+        type: "POST",
+        url: "/api/contact/add",
+        data: JSON.stringify(data),
+        dataType: "json",
+        contentType:"application/json",
+        success: function (response) {
+        	if(response.notification.message=="add successful"){
+        		Swal.fire(
+        				  'Successful!',
+        				  'We will contact with you as soon as possible',
+        				  'success'
+        				)
+        	}else if(response.notification.message=="existed contact"){
+        		Swal.fire(
+      				  'We have alreay gotten your contact!',
+      				  'We will contact with you as soon as possible',
+      				  'success'
+      				)
+        	}
+       }
+    });
+    }
+},false)
+   
