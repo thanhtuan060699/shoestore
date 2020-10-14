@@ -2,6 +2,7 @@ package shoestore.controller.customer;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import shoestore.constant.PaymentConstant;
+import shoestore.dto.CartDTO;
 import shoestore.dto.PaymentResponseDTO;
+import shoestore.dto.StatementDTO;
+import shoestore.entity.ProductAttributeEntity;
 import shoestore.service.impl.OrderService;
 import shoestore.service.impl.PaymentRequestService;
 import shoestore.service.impl.PaymentResponseService;
+import shoestore.service.impl.ProductAttributeService;
 import shoestore.util.SessionUtil;
 
 @Controller
@@ -29,6 +34,9 @@ public class PaymentController {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	ProductAttributeService productAttributeService;
 	
 	@RequestMapping(value = "/karma/payment/onepay/result",method = RequestMethod.GET)
 	public ModelAndView resultOnePay(HttpServletRequest request) {
@@ -55,35 +63,42 @@ public class PaymentController {
 	    }
 	    //correct
 	    if(hashValidated.equals("CORRECT")&&fields.get("vpc_TxnResponseCode").equals("0")) {
-	    	//save table order
+	    	 PaymentResponseDTO paymentResponseDTO=new PaymentResponseDTO();
+	 	    String vpcTxnResponseCode=paymentRequestService.null2unknown((String) fields.get("vpc_TxnResponseCode"));
+	 	    String vpcTransactionNo=paymentRequestService.null2unknown((String) fields.get("vpc_TransactionNo"));
+	 	    String vpcAmount=paymentRequestService.null2unknown((String) fields.get("vpc_Amount"));
+	 	    String vpcOrderInfo=paymentRequestService.null2unknown((String) fields.get("vpc_OrderInfo"));
+	 	    String vpcMessage=paymentRequestService.null2unknown((String) fields.get("vcp_Message"));
+	 	    String transStatus = "";
+	 	    //set payment response
+	 	    paymentResponseDTO.setResponseCode(vpcTxnResponseCode);
+	 	    paymentResponseDTO.setOrderInfo(vpcOrderInfo);
+	 	    paymentResponseDTO.setTransStatus(vpcTransactionNo);
+	 	    paymentResponseDTO.setMessage(vpcMessage);
+	 	    paymentResponseDTO.setTypeCard("ATM");
+	 	    paymentResponseDTO.setPurchaseAmount(Long.parseLong(vpcAmount)/100);
+	 	    //save payment response
+	 	    paymentResponseDTO=paymentResponseService.saveNewPaymentResponse(paymentResponseDTO);
+	 	    //reduce quantity in attribute table
+	 	    List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
+			productAttributeService.reduceQuantity(cartDTOs);
+			//update payment status order table
+			orderService.updatePaymentStatus(Long.parseLong(vpcOrderInfo));
+	 	    //update table order
+	 	    orderService.updatePaymentResponse(Long.parseLong(vpcOrderInfo), paymentResponseDTO);
+	 	    modelAndView.addObject("amount", Integer.parseInt(vpcAmount)/100);
+		    modelAndView.addObject("transactionNo", vpcTransactionNo);
+		    modelAndView.addObject("orderInfo", vpcOrderInfo);
+		    SessionUtil.getInstance().removeValue(request, "carts");
+		    SessionUtil.getInstance().removeValue(request, "amounts");
+	    	
+	    }
+	    if(hashValidated.equals("CORRECT")&&fields.get("vpc_TxnResponseCode").equals("0")==false) {
+	    	modelAndView.addObject("unsuccessful", true);
+	    	StatementDTO statementDTO=new StatementDTO(true, 200, "unsuccessful");
 	    	
 	    }
 	    	
-	    PaymentResponseDTO paymentResponseDTO=new PaymentResponseDTO();
-	    String vpcTxnResponseCode=paymentRequestService.null2unknown((String) fields.get("vpc_TxnResponseCode"));
-	    String vpcTransactionNo=paymentRequestService.null2unknown((String) fields.get("vpc_TransactionNo"));
-	    String vpcAmount=paymentRequestService.null2unknown((String) fields.get("vpc_Amount"));
-	    String vpcOrderInfo=paymentRequestService.null2unknown((String) fields.get("vpc_OrderInfo"));
-	    String vpcMessage=paymentRequestService.null2unknown((String) fields.get("vcp_Message"));
-	    String transStatus = "";
-	    //set payment response
-	    paymentResponseDTO.setResponseCode(vpcTxnResponseCode);
-	    paymentResponseDTO.setOrderInfo(vpcOrderInfo);
-	    paymentResponseDTO.setTransStatus(vpcTransactionNo);
-	    paymentResponseDTO.setMessage(vpcMessage);
-	    paymentResponseDTO.setTypeCard("ATM");
-	    paymentResponseDTO.setPurchaseAmount(Long.parseLong(vpcAmount)/100);
-	    //save payment response
-	    paymentResponseDTO=paymentResponseService.saveNewPaymentResponse(paymentResponseDTO);
-	    //update table order
-	    orderService.updatePaymentResponse(Long.parseLong(vpcOrderInfo), paymentResponseDTO);
-	    
-	    modelAndView.addObject("amount", Integer.parseInt(vpcAmount)/100);
-	    modelAndView.addObject("transactionNo", vpcTransactionNo);
-	    modelAndView.addObject("orderInfo", vpcOrderInfo);
-	    SessionUtil.getInstance().removeValue(request, "cart");
-	    SessionUtil.getInstance().removeValue(request, "amounts");
-	    
 		return modelAndView;
 	}
 	@RequestMapping(value = "/karma/payment/onepay/world/result",method = RequestMethod.GET)
@@ -128,9 +143,9 @@ public class PaymentController {
 	    //update table order
 	    orderService.updatePaymentResponse(Long.parseLong(vpcOrderInfo), paymentResponseDTO);
 	    
-	    modelAndView.addObject("amount", Integer.parseInt(vpcAmount)/100);
-	    modelAndView.addObject("transactionNo", vpcTransactionNo);
-	    modelAndView.addObject("orderInfo", vpcOrderInfo);
+	    modelAndView.addObject("amount", paymentResponseDTO.getPurchaseAmount());
+	    modelAndView.addObject("transactionNo", paymentResponseDTO.getTransStatus());
+	    modelAndView.addObject("orderInfo", paymentResponseDTO.getOrderInfo());
 	    SessionUtil.getInstance().removeValue(request, "cart");
 	    SessionUtil.getInstance().removeValue(request, "amounts");
 	    

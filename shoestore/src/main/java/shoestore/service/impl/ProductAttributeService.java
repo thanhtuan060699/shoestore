@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import shoestore.convert.ProductAttributeConverter;
-import shoestore.convert.ProductConverter;
+import shoestore.dto.BrandDTO;
+import shoestore.dto.CartDTO;
 import shoestore.dto.ProductAttributeDTO;
 import shoestore.dto.ProductDTO;
 import shoestore.entity.ProductAttributeEntity;
@@ -26,6 +27,9 @@ public class ProductAttributeService implements IProductAttributeService{
 	
 	@Autowired
 	ProductAttributeConverter productAttributeConverter;
+	
+	
+
 	
 	@Override
 	public List<ProductAttributeDTO> findAllByProductId(Long id) {
@@ -51,6 +55,25 @@ public class ProductAttributeService implements IProductAttributeService{
 			productAttributeDTOs.add(productAttributeConverter.convertToDTO(productAttributes.get(0)));
 		}
 		return productAttributeDTOs;
+	}
+
+	@Override
+	public void reduceQuantity(List<CartDTO> cartDTOs) {
+		for(CartDTO cartDTO: cartDTOs) {
+			ProductAttributeEntity productAttributeEntity=productAttributeRepository.findOne(cartDTO.getProductAttributeId());
+			productAttributeEntity.setQuantity(cartDTO.getMaxQuantity()-cartDTO.getQuantity());
+			productAttributeRepository.save(productAttributeEntity);
+		}
+		
+	}
+
+	@Override
+	public List<BrandDTO> quantityOfBrand(List<BrandDTO> brandDTOs) {
+		for(BrandDTO brandDTO:brandDTOs) {
+			brandDTO.setTotalQuantity(productAttributeRepository.getTotalQuantity(brandDTO.getId()));
+		}
+		
+		return brandDTOs;
 	}
 
 }

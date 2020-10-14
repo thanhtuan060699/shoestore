@@ -50,6 +50,7 @@ public class ProductController {
 			i++;
 		}
 		List<BrandDTO> brandDTOs=brandService.listBrand();
+		brandDTOs=productAttributeService.quantityOfBrand(brandDTOs);
 		modelAndView.addObject("productActive",true);
 		modelAndView.addObject("brands", brandDTOs);
 		modelAndView.addObject("listProducts", productDTOs);

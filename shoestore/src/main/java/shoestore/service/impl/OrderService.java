@@ -57,6 +57,7 @@ public class OrderService implements IOrderService{
 		orderEntity.setUserEntity(userEntity);
 		orderEntity.setAmount(sumQuantity(cartDTOs));
 		orderEntity.setTotalPrice(sumPrice(cartDTOs));
+		orderEntity.setPaymentStatus("PENDING");
 		orderEntity=orderRepository.save(orderEntity);
 		//add table orderdetail
 		for(CartDTO cartDTO: cartDTOs) {
@@ -68,13 +69,6 @@ public class OrderService implements IOrderService{
 			orderDetailEntity.setColor(cartDTO.getColor());
 			orderDetailEntity.setOrderEntity(orderEntity);
 			orderDetailReposity.save(orderDetailEntity);
-		}
-		
-		//reduce quantity in table product attribute
-		for(CartDTO cartDTO: cartDTOs) {
-			ProductAttributeEntity productAttributeEntity=productAttributeRepository.findOne(cartDTO.getProductAttributeId());
-			productAttributeEntity.setQuantity(cartDTO.getMaxQuantity()-cartDTO.getQuantity());
-			productAttributeRepository.save(productAttributeEntity);
 		}
 		return orderConverter.convertToDTO(orderEntity);
 	}
@@ -109,6 +103,14 @@ public class OrderService implements IOrderService{
 		OrderEntity orderEntity=orderRepository.findOne(orderId);
 		PaymentResponseEntity paymentResponseEntity=paymentResponseConverter.convertToEntity(paymentResponseDTO);
 		orderEntity.setPaymentResponseEntity(paymentResponseEntity);
+		orderRepository.save(orderEntity);
+		
+	}
+
+	@Override
+	public void updatePaymentStatus(Long orderId) {
+		OrderEntity orderEntity=orderRepository.findOne(orderId);
+		orderEntity.setPaymentStatus("SUCCESS");
 		orderRepository.save(orderEntity);
 		
 	}

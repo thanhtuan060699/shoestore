@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded",function(){
     var check_box_rule=document.getElementById('f-option4');
     btn_order.onclick=function(){
         var index=validate();
+        
         if(index==7){
             var data={};
             var formData=$('#formEdit').serializeArray();
@@ -33,7 +34,9 @@ document.addEventListener("DOMContentLoaded",function(){
                      contentType:"application/json",
                      success: function (response) {
                        if(response.success==true){
-                           window.location.href=""+response.message;
+                          var btn_order_delete=document.getElementsByClassName('btn-delete-order')[0];
+                          btn_order_delete.classList.remove('btn-order');
+                          window.location.href=""+response.message;
                        }
                     }
                  });

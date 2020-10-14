@@ -12,4 +12,5 @@ public interface IOrderService {
 	public OrderDTO addNewOrder(UserDTO userDTO,OrderDTO orderDTO,List<CartDTO> cartDTOs);
 	public void updatePaymentRequest(OrderDTO orderDTO,PaymentRequestDTO paymentRequestDTO);
 	public void updatePaymentResponse(Long orderId,PaymentResponseDTO paymentResponseDTO);
+	public void updatePaymentStatus(Long orderId);
 }

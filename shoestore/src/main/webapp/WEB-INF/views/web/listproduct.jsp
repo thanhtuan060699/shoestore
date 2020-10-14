@@ -23,7 +23,7 @@
 						<form action="#">
 							<ul>
 							<c:forEach items="${brands}" var="item">
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label for="apple">${item.name}<span>(29)</span></label></li>
+								<li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand" data-brandid="${item.id}" onclick="getSneakersByBrand(${item.id})"><label for="apple">${item.name}<span>(${item.totalQuantity})</span></label></li>
 							</c:forEach>
 							</ul>
 						</form>
@@ -42,20 +42,7 @@
 							</ul>
 						</form>
 					</div>
-					<div class="common-filter">
-						<div class="head">Price</div>
-						<div class="price-range-area">
-							<div id="price-range"></div>
-							<div class="value-wrapper d-flex">
-								<div class="price">Price:</div>
-								<span>$</span>
-								<div id="lower-value"></div>
-								<div class="to">to</div>
-								<span>$</span>
-								<div id="upper-value"></div>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 			<div class="col-xl-9 col-lg-8 col-md-7">
@@ -281,7 +268,7 @@
 				<div class="col-lg-3">
 					<div class="ctg-right">
 						<a href="#" target="_blank">
-							<img class="img-fluid d-block mx-auto" src="img/category/c5.jpg" alt="">
+							<img class="img-fluid d-block mx-auto" src="/template/web/img/category/c5.jpg" alt="">
 						</a>
 					</div>
 				</div>
@@ -303,8 +290,11 @@
 				</div>
 				<div class="modal-body">
 				   <input type="text" id="contact-email" class="form-control"  placeholder="Email" style="margin-bottom: 20px">
+				   <div class="inform-validate"></div>
 				   <input type="text" id="contact-phone" class="form-control"  placeholder="Phone Number" style="margin-bottom: 20px">
+				   <div class="inform-validate"></div>
 				   <input type="text" id="contact-name" class="form-control"  placeholder="Full Name">
+				   <div class="inform-validate"></div>
 				</div>
 				<div class="modal-footer" style="text-align: center;">
 				   <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnContact">Send</button>

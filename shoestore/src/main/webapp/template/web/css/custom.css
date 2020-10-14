@@ -32,3 +32,12 @@
     background:white;
     box-shadow: 5px 10px 20px #828bb3;
 }
+.sidebar-filter .top-filter-head{
+    background:white;
+    color:black;
+    font-weight:bold;
+    font-size:20px
+}
+.cart_inner .table tbody tr td .media .d-flex img{
+    object-fit: cover;
+}

@@ -1,17 +1,19 @@
 package shoestore.dto;
 
 public class BrandDTO {
-	private String id;
+	private Long id;
 	
 	private String name;
 	
 	private Integer status;
+	
+	private Integer totalQuantity;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -29,6 +31,14 @@ public class BrandDTO {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Integer getTotalQuantity() {
+		return totalQuantity;
+	}
+
+	public void setTotalQuantity(Integer totalQuantity) {
+		this.totalQuantity = totalQuantity;
 	}
 	
 	

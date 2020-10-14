@@ -21,6 +21,8 @@ public class OrderDTO {
 	
 	private String methodPayment;
 	
+	private String paymentStatus;
+	
 	public String getFullName() {
 		return fullName;
 	}
@@ -99,6 +101,14 @@ public class OrderDTO {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
 	}
 
 	

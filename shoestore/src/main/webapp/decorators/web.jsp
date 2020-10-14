@@ -75,11 +75,11 @@
 	<script src="<c:url value='/template/web/js/vendor/bootstrap.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.twbsPagination.js' />"></script>
 	<script src="<c:url value='/template/web/js/notification.js' />"></script>
+	<script src="<c:url value='/template/web/js/sweetalert2.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.ajaxchimp.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.nice-select.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.sticky.js' />"></script>
 	<script src="<c:url value='/template/web/js/nouislider.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/sweetalert2.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.bootstrap-growl.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/jquery.magnific-popup.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/owl.carousel.min.js' />"></script>
@@ -88,6 +88,17 @@
 	<script src="<c:url value='/template/web/js/gmaps.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/main.js' />"></script>
 	<script src="<c:url value='/template/web/js/jsmain/jscustom.js' />"></script>
-	
+	<c:if test="${not empty checkoutlogin }">
+		<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded",function(){
+			Swal.fire(
+  				  'You need to log in!',
+  				  'You need to log in before checking out',
+  				  'success'
+  				)
+		},false)
+		
+		</script>
+		</c:if>
 </body>
 </html>

@@ -255,10 +255,16 @@ public class CartAPI {
 				hashMap.put("statement", statement);
 			}else {
 				List<CartDTO> cartDTOs=(List<CartDTO>) SessionUtil.getInstance().getValue(request, "carts");
+				//check quantity<maxQuantity
 				for(CartDTO cart: cartDTOs) {
 					if(cart.getProductAttributeId()==cartDTO.getProductAttributeId()) {
 						if(cart.getQuantity()<cart.getMaxQuantity()) {
 							cart.setQuantity(cart.getQuantity()+1);
+						}else {
+							StatementDTO statement=new StatementDTO(true, 200, "over quantity");
+							hashMap.put("amounts", cart.getMaxQuantity());
+							hashMap.put("statement", statement);
+				 			return hashMap;
 						}
 						cart.setTotal(cart.getQuantity()*cart.getPrice());
 						SessionUtil.getInstance().putValue(request, "amounts", getSumTotalQuantity(cartDTOs));

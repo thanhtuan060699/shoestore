@@ -1,4 +1,5 @@
 <%@include file="/common/taglib.jsp"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -70,15 +71,16 @@
                         <div class="order_box">
                             <h2>Your Order</h2>
                             <ul class="list">
-                                <li>Product <span>Total</span></li>
+                                <li style="font-weight: 500;color:#222222;text-transform: uppercase;">Product <span style="margin-left: 150px;">Total</span></li>
                                 <c:forEach var="item" items="${products}">
-                               		 <li><span class="first" style="width: 100px">${item.name}</span> <span class="middle">x ${item.quantity}</span> <span class="last">${item.total} VND</span></li>
-                               		 <li><span class="attribute-checkout">Size: ${item.size} VN / Color: ${item.color}</span></li>
+                               		 <li style="color: #777777;font-weight: 500"><span class="first" style="width: 100px">${item.name}</span> <span class="middle" style="margin-left: -4px;padding-right:3px">x ${item.quantity}</span> <span class="last" style="margin-left: 0px">
+                               		 <fmt:formatNumber value = "${item.total}" type = "currency" currencySymbol="$" currencyCode="VND" pattern="###,##0"/> VND</span></li>
+                               		 <li><span class="attribute-checkout" style="font-size: 14px">Size: ${item.size} VN / Color: ${item.color}</span></li>
                                 </c:forEach>
                                 
                             </ul>
                             <ul class="list list_2">
-                                <li><a href="#">Subtotal <span>${sumTotalPrice} VND</span></a></li>
+                                <li><a href="#">Subtotal <span><fmt:formatNumber value = "${sumTotalPrice}" type = "currency" currencySymbol="$" currencyCode="VND" pattern="###,##0"/> VND</span></a></li>
                                 <li><a href="#">Shipping <span>Flat rate: O VND</span></a></li>
                                 <li><a href="#">Total <span>$2210.00</span></a></li>
                             </ul>
@@ -95,7 +97,7 @@
                                 <div class="radion_btn">
                                     <input type="radio" id="f-option6" name="selector" data-payment="onePay">
                                     <label for="f-option6">Pay By ATM Card </label>
-                                    <img src="/template/web/img/product/card.jpg" alt="">
+                                    
                                     <div class="check"></div>
                                 </div>
                              
@@ -118,7 +120,7 @@
                                 <label for="f-option4" class="conditions">I’ve read and accept the </label>
                                 <a href="#">terms & conditions*</a>
                             </div>
-                           	    <button class="primary-btn btn-order" style="margin-left: 84px">Order</button>
+                           	    <button class="primary-btn btn-order btn-delete-order" style="margin-left: 84px">Order</button>
                             </div>
                        
                         </div>

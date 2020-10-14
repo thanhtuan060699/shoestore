@@ -55,6 +55,9 @@ public class OrderEntity extends BaseEntity{
 	@Column(name="methodPayment")
 	private String methodPayment;
 	
+	@Column(name="payment_status")
+	private String paymentStatus;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="user_id")
 	private UserEntity userEntity;
@@ -204,6 +207,14 @@ public class OrderEntity extends BaseEntity{
 
 	public void setMethodPayment(String methodPayment) {
 		this.methodPayment = methodPayment;
+	}
+
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
 	}
 	
 	

@@ -13,6 +13,7 @@
 	<!-- End Banner Area -->
 
 	<!--================Login Box Area =================-->
+		
 	<section class="login_box_area section_gap" style="padding-top:200px">
 		<div class="container">
 			<div class="row">
@@ -51,12 +52,11 @@
 				</div>
 			</div>
 		</div>
+		
+	
 	</section>
-	<c:if test="${not empty checkoutlogin }">
-		<script type="text/javascript">
-			alert('You need to login before check out');
-		</script>
-	</c:if>
+	
+	
 	<!--================End Login Box Area =================-->
 </body>
 </html>

@@ -68,7 +68,21 @@ document.addEventListener("DOMContentLoaded",function(){
             }
         }
         if(index==0){
-            alert('You have not chosen your size and color');
+        	$(function() {
+     		    index=0;
+     		    index=100+window.pageYOffset;
+     		    setTimeout(function() {
+     		        $.bootstrapGrowl("You have not chosen your size and color", {
+     		            type: 'success',
+     		            align: 'right',
+     		            width: '350',
+     		            delay: 1000,
+     		            offset: {from: 'top', amount: index},
+     		       
+     		        });
+     		    }, 0);
+     		  
+     		});
         }else{
             var name=document.getElementsByClassName('name-detail-product')[0].getAttribute('data-name');
             var sneakerSize=document.getElementsByClassName('sneaker-size');
@@ -76,6 +90,8 @@ document.addEventListener("DOMContentLoaded",function(){
             var maxQuantity=document.getElementsByClassName('quantity-detail-product')[0].getAttribute('data-quantity');
             data['maxQuantity']=maxQuantity;
             data['name']=name;
+            var image=document.getElementsByClassName('detai-image')[0].getAttribute('data-image');
+            data['thumbnailImage']=image;
             for(var i=0;i<sneakerSize.length;i++){
                 if( sneakerSize[i].getAttribute('class').includes('change')==true){
                     var dataSize=sneakerSize[i].getAttribute('data-size');
@@ -157,7 +173,21 @@ document.addEventListener("DOMContentLoaded",function(){
             }
         }
         if(index==0){
-            alert('You have not chosen your size and color');
+        	$(function() {
+     		    index=0;
+     		    index=100+window.pageYOffset;
+     		    setTimeout(function() {
+     		        $.bootstrapGrowl("You have not chosen your size and color", {
+     		            type: 'success',
+     		            align: 'right',
+     		            width: '350',
+     		            delay: 1000,
+     		            offset: {from: 'top', amount: index},
+     		       
+     		        });
+     		    }, 0);
+     		  
+     		});
         }else{
             var data={};
             var quantity=document.getElementsByClassName('qty')[0].getAttribute('value');
@@ -192,7 +222,21 @@ document.addEventListener("DOMContentLoaded",function(){
             }
         }
         if(index==0){
-            alert('You have not chosen your size and color');
+        	$(function() {
+     		    index=0;
+     		    index=100+window.pageYOffset;
+     		    setTimeout(function() {
+     		        $.bootstrapGrowl("You have not chosen your size and color", {
+     		            type: 'success',
+     		            align: 'right',
+     		            width: '350',
+     		            delay: 1000,
+     		            offset: {from: 'top', amount: index},
+     		       
+     		        });
+     		    }, 0);
+     		  
+     		});
         }else{
             var data={};
             var quantity=document.getElementsByClassName('qty')[0].getAttribute('value');
@@ -225,7 +269,21 @@ function changeQuantity(){
         }
     }
     if(index==0){
-        alert('You have not chosen your size and color');
+    	$(function() {
+ 		    index=0;
+ 		    index=100+window.pageYOffset;
+ 		    setTimeout(function() {
+ 		        $.bootstrapGrowl("You have not chosen your size and color", {
+ 		            type: 'success',
+ 		            align: 'right',
+ 		            width: '350',
+ 		            delay: 1000,
+ 		            offset: {from: 'top', amount: index},
+ 		       
+ 		        });
+ 		    }, 0);
+ 		  
+ 		});
     }else{
         var qty=document.getElementsByClassName('qty')[0];
         var quantityCurrent=qty.getAttribute('value');

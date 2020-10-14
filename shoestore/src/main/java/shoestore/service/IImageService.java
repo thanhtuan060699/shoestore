@@ -5,5 +5,5 @@ import java.util.List;
 import shoestore.dto.ImageDTO;
 
 public interface IImageService {
-	public List<ImageDTO> listImage();
+	public List<ImageDTO> findImageByProductId(Long productId);
 }

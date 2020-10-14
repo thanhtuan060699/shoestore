@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import shoestore.constant.SystemConstant;
 import shoestore.convert.ProductConverter;
 import shoestore.dto.ProductDTO;
+import shoestore.entity.BrandEntity;
 import shoestore.entity.ImageEntity;
 import shoestore.entity.ProductEntity;
+import shoestore.repository.BrandRepository;
 import shoestore.repository.ProductRepository;
 import shoestore.service.IProductService;
 
@@ -23,6 +25,9 @@ public class ProductService implements IProductService{
 	
 	@Autowired
 	ProductConverter productConverter;
+	
+	@Autowired
+	BrandRepository brandRepository;
 	
 	@Override
 	public int getTotalItem() {
@@ -54,6 +59,14 @@ public class ProductService implements IProductService{
 		ProductDTO productDTO=productConverter.convertToDTO(productEntity);
 		productDTO.setBrand(productEntity.getBrandEntity().getName());
 		return productDTO;
+	}
+
+
+	@Override
+	public int getTotalItemByBrand(Long brandId) {
+		BrandEntity brandEntity=brandRepository.findOne(brandId);
+		List<ProductEntity> productEntities=productRepository.findAllByBrandEntity(brandEntity);
+		return productEntities.size();
 	}
 
 }

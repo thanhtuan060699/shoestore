@@ -10,5 +10,6 @@ public interface IProductService {
 	public int getTotalItem();
 	public List<ProductDTO> findAll(Pageable pageable);
 	public ProductDTO findById(Long id);
+	public int getTotalItemByBrand(Long brandId);
 	
 }

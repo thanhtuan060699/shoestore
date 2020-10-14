@@ -7,7 +7,14 @@
             http://www.springframework.org/schema/security
             http://www.springframework.org/schema/security/spring-security-3.2.xsd">
   
-  	
+  	 <beans:bean id="jwtAuthenticationFilter" class="shoestore.filter.JwtAuthenticationTokenFilter">
+    <beans:property name="authenticationManager" ref="authenticationManager" />
+     </beans:bean>
+  	 <beans:bean id="restServicesEntryPoint"  class="shoestore.service.impl.RestAuthenticationEntryPoint" />
+  	 <http pattern="/karma/**" auto-config="false" use-expressions="true" entry-point-ref="restServicesEntryPoint">
+ 	   <custom-filter position="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter" />
+  	</http>
+  	 
     <http  auto-config="false" use-expressions="true" disable-url-rewriting="true">
   		
     	<access-denied-handler error-page="/accessDenied" />
@@ -21,13 +28,13 @@
         <logout delete-cookies="JSESSIONID"/>
         <remember-me key="uniqueAndSecret" />
     </http>
-    <authentication-manager >
+    <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="customUserDetailsService">
         		<password-encoder ref="bcryptEncoder"/>
         </authentication-provider>
     </authentication-manager>
 
-    <beans:bean id="restServicesEntryPoint"  class="shoestore.service.impl.RestAuthenticationEntryPoint" />
+    
     <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     <beans:bean id="customUserDetailsService" class="shoestore.service.impl.CustomUserDetailsService" />
     <beans:bean id="customSuccessHandler" class="shoestore.security.CustomSuccessHandler" />

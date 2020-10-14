@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import shoestore.dto.ImageDTO;
 import shoestore.dto.ProductAttributeDTO;
 import shoestore.dto.ProductDTO;
+import shoestore.service.IImageService;
 import shoestore.service.impl.ImageService;
 import shoestore.service.impl.ProductAttributeService;
 import shoestore.service.impl.ProductService;
@@ -38,6 +40,8 @@ public class DetailProductController {
 		modelAndView.addObject("sizes", productAttributeDTOs);
 		modelAndView.addObject("product", productDTO);
 		modelAndView.addObject("productActive",true);
+		List<ImageDTO> imageDTOs=imageService.findImageByProductId(id);
+		modelAndView.addObject("images",imageDTOs.get(0));
 		return modelAndView;
 	}
 }

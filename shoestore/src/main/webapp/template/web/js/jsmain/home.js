@@ -9,7 +9,7 @@
             var quantity=document.getElementsByClassName('listproduct-color')[i].getAttribute('data-quantity');
             var size=document.getElementsByClassName('listproduct-size')[i].getAttribute('data-size');
             var productAttributeId=document.getElementsByClassName('listproduct-size')[i].getAttribute('data-at');
-            var image=document.getElementsByClassName('img-fluid')[i].getAttribute('data-image');
+            var image=document.getElementsByClassName('image-home')[i].getAttribute('data-image');
             var data={};
             data['name']=name;
             data['price']=price;
@@ -58,22 +58,22 @@
                     numberCart.outerHTML='<span class="numberCart">('+response.amounts+')</span>'; 
                   }else if(response.statement.message==='over quantity') {
                 	  $(function() {
-              		    index=0;
-              		    index=100+window.pageYOffset;
-              		    setTimeout(function() {
-              		        $.bootstrapGrowl("This product just have "+response.amounts+" in the stonk", {
-              		            type: 'info',
-              		            align: 'right',
-              		            width: '300',
-              		            delay: 1000,
-              		            offset: {from: 'top', amount: index},
-              		       
-              		        });
-              		    }, 0);
-              		  
-              		});
-                  }
-                  
+                		    index=0;
+                		    index=100+window.pageYOffset;
+                		    setTimeout(function() {
+                		        $.bootstrapGrowl("This product just have "+response.amounts+" in the stonk", {
+                		            type: 'info',
+                		            align: 'right',
+                		            width: '300',
+                		            delay: 500,
+                		            offset: {from: 'top', amount: index},
+                		       
+                		        });
+                		    }, 0);
+                		  
+                		});
+                    }
+                          
              }
             });
             break;
@@ -89,22 +89,6 @@ document.addEventListener("DOMContentLoaded",function(){
       var email=document.getElementById('contact-email').value;
       var phone=document.getElementById('contact-phone').value;
       var name=document.getElementById('contact-name').value;
-      var index=0;
-      if(email==null||email==''){
-          var inform_validate=document.getElementsByClassName('inform-validate')[0];
-          inform_validate.outerHTML='<div class="inform-validate" style="color: red;"> You need to fill out your email</div>';
-          index++;
-      }
-      if(phone==null||phone==''){
-          var inform_validate=document.getElementsByClassName('inform-validate')[1];
-          inform_validate.outerHTML='<div class="inform-validate" style="color: red;"> You need to fill out your phonenumber</div>';
-          index++;
-      }
-      if(name==null||name==''){
-          var inform_validate=document.getElementsByClassName('inform-validate')[2];
-          inform_validate.outerHTML='<div class="inform-validate" style="color: red;"> You need to fill out your name</div>';
-          index++;
-      }
       var shoeName=document.getElementsByClassName('save-contact')[0].getAttribute('data-name');
       var color=document.getElementsByClassName('save-contact')[0].getAttribute('data-color');
       var size=document.getElementsByClassName('save-contact')[0].getAttribute('data-size');
@@ -114,7 +98,6 @@ document.addEventListener("DOMContentLoaded",function(){
       data['shoeName']=shoeName;
       data['color']=color;
       data['size']=size;
-      
       $.ajax({
         type: "POST",
         url: "/api/contact/add",
@@ -139,7 +122,4 @@ document.addEventListener("DOMContentLoaded",function(){
     });
     }
 },false)
-//get sneakers by brand id
-function getSneakersByBrand(brandId){
-	 window.location.href="/karma/listproduct?brandId="+brandId+"&page=1&limit=9";
-}
+   
