@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@include file="/common/taglib.jsp"%>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Home</title>
+<title>Insert title here</title>
 </head>
 <body>
-<!-- start banner Area -->
-	<section class="banner-area">
+       <section class="banner-area">
 		<div class="container">
 			<div class="row fullscreen align-items-center justify-content-start">
 				<div class="col-lg-12">
@@ -462,9 +460,6 @@
 			  </div>
 			</div>
 	</div>
-	<!-- End related-product Area -->
-	<script src="<c:url value='/template/web/js/vendor/jquery-2.2.4.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/countdown.js' />"></script>
-	<script src="<c:url value='/template/web/js/jsmain/home.js' />"></script>
+    <script src="<c:url value='/template/web/js/jsmain/heatmapcus.js' />"></script>
 </body>
 </html>

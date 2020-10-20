@@ -8,7 +8,9 @@
        <pattern>/admin*</pattern>
     </decorator>
     
- 
+ 	 <decorator name="heatmap" page="heatmap.jsp">
+       <pattern>/heatmap/*</pattern>
+    </decorator>
      <decorator name="karma" page="web.jsp">
        <pattern>/*</pattern>
     </decorator>

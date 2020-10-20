@@ -34,7 +34,7 @@
 							<c:if test="${ empty productActive }">
 								<li class="nav-item "><a class="nav-link" href="/karma/listproduct?page=1&limit=9">Shop</a></li>
 							</c:if>
-							<li class="nav-item "><a class="nav-link" href="/heatmap/home">Test</a></li>
+							<li class="nav-item "><a class="nav-link" href="/karma/heatmap/home">Test</a></li>
 						
 							<c:if test="${not empty pageContext.request.userPrincipal.name}">
 							<li class="nav-item submenu dropdown">

@@ -43,9 +43,10 @@
 </head>
 <body class="animsition">
 	<div id="heatmapContainerWrapper">
+      <div id="heatmapContainer">
 	<!-- Header-->
 	
-	<%@ include file="/common/web/header.jsp" %>
+	<%@ include file="/common/heatmap/header.jsp" %>
 	
 
 	<!-- End Header -->
@@ -56,12 +57,12 @@
 		
 		
 		<!-- Begin footer -->
-    	<%@ include file="/common/web/footer.jsp" %>
+    	<%@ include file="/common/heatmap/footer.jsp" %>
     	<!-- End footer -->
     	
-    	
+	
+		</div>
 	</div>
-
 	
 	<script src="<c:url value='/template/web/js/vendor/jquery-2.2.4.min.js' />"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
@@ -82,7 +83,6 @@
 	<script src="<c:url value='/template/web/js/gmaps.min.js' />"></script>
 	<script src="<c:url value='/template/web/js/main.js' />"></script>
 	<script src="<c:url value='/template/web/js/jsmain/heatmap.js' />"></script>
-	<script src="<c:url value='/template/web/js/jsmain/heatmapclick.js' />"></script>
 	<c:if test="${not empty checkoutlogin }">
 		<script type="text/javascript">
 		document.addEventListener("DOMContentLoaded",function(){
