@@ -1,5 +1,5 @@
  window.onload = function() {
-	 document.querySelector('#heatmapContainerWrapper').onclick = function(ev) {
+	 document.querySelector('#heatmapContainerWrapper').onmousemove  = function(ev) {
 		    var x= ev.pageX;
 		    var y= ev.pageY;
 		    var z= ev.pageX;
@@ -12,7 +12,7 @@
 		    data['url']=currentLocation.href;
 		    $.ajax({
                 type: "POST",
-                url: "/api/heatmap/click/add",
+                url: "/api/heatmap/move/add",
                 data: JSON.stringify(data),
 				dataType: "json",
 			    contentType:"application/json",

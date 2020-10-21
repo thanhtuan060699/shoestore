@@ -464,7 +464,6 @@
 	</div>
 	<!-- End related-product Area -->
 	<script src="<c:url value='/template/web/js/vendor/jquery-2.2.4.min.js' />"></script>
-	<script src="<c:url value='/template/web/js/countdown.js' />"></script>
 	<script src="<c:url value='/template/web/js/jsmain/home.js' />"></script>
 </body>
 </html>

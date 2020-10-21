@@ -17,25 +17,25 @@ import shoestore.dto.PointDTO;
 import shoestore.service.impl.PointService;
 
 @RestController
-public class HeatmapClickAPI {
+public class HeatmapMoveAPI {
 	@Autowired
 	PointService pointService;
 	
-	@RequestMapping(value = "/api/heatmap/click/add",method = RequestMethod.POST)
-	public void addClickValue(@RequestBody PointDTO pointDTO,HttpServletRequest request) {
+	@RequestMapping(value = "/api/heatmap/move/add",method = RequestMethod.POST)
+	public void addMoveValue(@RequestBody PointDTO pointDTO,HttpServletRequest request) {
 		String url=pointDTO.getUrl().replace("http://localhost:8080/", "");
 		pointDTO.setUrl(url);
 		pointDTO.setUrl("heatmap/home");
-		pointDTO.setType(SystemConstant.TYPE_CLICK);
+		pointDTO.setType(SystemConstant.TYPE_MOVE);
 		pointService.addNewPoint(pointDTO);
 	}
 	
-	@RequestMapping(value = "/api/heatmap/click/get",method = RequestMethod.POST)
-	public @ResponseBody HashMap<String, Object> getClickValue(@RequestBody PointDTO pointDTO,HttpServletRequest request) {
+	@RequestMapping(value = "/api/heatmap/move/get",method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> getMoveValue(@RequestBody PointDTO pointDTO,HttpServletRequest request) {
 		HashMap<String, Object> hashMap=new HashMap<String, Object>();
 		String url=pointDTO.getUrl().replace("http://localhost:8080/", "");
-		pointDTO.setUrl(url); 
-		pointDTO.setType(SystemConstant.TYPE_CLICK);
+		pointDTO.setUrl("heatmap/home");
+		pointDTO.setType(SystemConstant.TYPE_MOVE);
 		List<PointDTO> pointDTOs=pointService.getPointByUrl(pointDTO);
 		Integer maxValue=pointService.getMaxValueInScreen(pointDTO);
 		Integer minValue=pointService.getMinValueInScreen(pointDTO);

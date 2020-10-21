@@ -26,6 +26,9 @@ public class PointEntity {
 	@Column(name="value")
 	private Integer value;
 	
+	@Column(name="type")
+	private String type;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="screenId")
 	private ScreenEntity screenEntity;
@@ -68,6 +71,14 @@ public class PointEntity {
 
 	public void setScreenEntity(ScreenEntity screenEntity) {
 		this.screenEntity = screenEntity;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

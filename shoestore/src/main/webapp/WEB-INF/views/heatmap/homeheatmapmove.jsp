@@ -460,6 +460,6 @@
 			  </div>
 			</div>
 	</div>
-    <script src="<c:url value='/template/web/js/jsmain/heatmapclickshow.js' />"></script>
+    <script src="<c:url value='/template/web/js/jsmain/heatmapmoveshow.js' />"></script>
 </body>
 </html>

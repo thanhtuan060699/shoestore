@@ -10,6 +10,8 @@ public class PointDTO {
 	private Integer yValue;
 	
 	private String url;
+	
+	private String type;
 
 	public Long getId() {
 		return id;
@@ -49,6 +51,14 @@ public class PointDTO {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

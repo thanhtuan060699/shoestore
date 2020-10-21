@@ -10,8 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeHeatMapController {
 	@RequestMapping(value = "/heatmap/home",method = RequestMethod.GET)
-	public ModelAndView showCart(HttpServletRequest request) {
+	public ModelAndView showClick(HttpServletRequest request) {
 		ModelAndView modelAndView=new ModelAndView("/heatmap/homeheatmap");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/heatmap/home/move",method = RequestMethod.GET)
+	public ModelAndView showMove(HttpServletRequest request) {
+		ModelAndView modelAndView=new ModelAndView("/heatmap/homeheatmapmove");
 		return modelAndView;
 	}
 }

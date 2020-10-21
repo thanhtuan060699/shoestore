@@ -41,3 +41,6 @@
 .cart_inner .table tbody tr td .media .d-flex img{
     object-fit: cover;
 }
+.heatmap-canvas{
+    z-index:100;
+}

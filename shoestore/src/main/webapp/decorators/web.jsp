@@ -83,6 +83,7 @@
 	<script src="<c:url value='/template/web/js/main.js' />"></script>
 	<script src="<c:url value='/template/web/js/jsmain/heatmap.js' />"></script>
 	<script src="<c:url value='/template/web/js/jsmain/heatmapclick.js' />"></script>
+	<script src="<c:url value='/template/web/js/jsmain/heatmapmove.js' />"></script>
 	<c:if test="${not empty checkoutlogin }">
 		<script type="text/javascript">
 		document.addEventListener("DOMContentLoaded",function(){
